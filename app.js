@@ -9,12 +9,100 @@ const translations = {
     nav_contact: "اتصل بنا",
     nav_login: "تسجيل دخول الشركات",
     nav_signup: "انضم كمورد معتمد",
+    hero_btn_company: "بوابة الشركة (المشتري) ←",
+    hero_btn_supplier: "بوابة المورد (البائع)",
+    c_m_1_sub: "قيد المراجعة",
+    c_m_2_sub: "من مورّدين معتمدين",
+    c_m_3_sub: "محفوظة بضمان Escrow",
+    table_view_all: "عرض الكل ←",
+    company_deal_name: "توريد مكونات هيدروليكية آلية",
+    company_order_no: "رقم الطلب: RFQ-2026-89",
+    company_deal_status: "4 عروض مقدمة",
+    s_m_1_sub: "مناقصة جديدة",
+    s_m_2_sub: "قيد التقييم",
+    s_m_3_sub: "جارية التنفيذ",
+    supplier_offer_cta: "تقديم عرض سعر ←",
+    supplier_deal_name: "خطوط تعبئة كرتونية متطورة",
+    supplier_buyer_location: "مشتري معتمد • السادس من أكتوبر",
+    supplier_deal_status: "متبقي 3 أيام للإغلاق",
+    inquiry_name: "اسم الشركة أو المسؤول",
+    inquiry_phone: "رقم الموبايل / واتساب",
+    inquiry_details: "تفاصيل الاستفسار أو الصفقة...",
+    inquiry_success: "تم إرسال طلبك بنجاح! سيتواصل معك فريق المنصة قريباً.",
+    modal_title: "تسجيل الدخول للبوابات",
+    modal_sub: "اختر نوع حسابك في منصة NovaBid",
+    modal_company: "🏢 الشركة (المشتري)",
+    modal_supplier: "🏭 المورد (البائع)",
+    modal_company_desc: "أنت على وشك الدخول إلى بوابة الشركة لإدارة طلبات الشراء (RFQs) وعروض الأسعار.",
+    modal_supplier_desc: "أنت على وشك الدخول إلى بوابة المورد لمتابعة الفرص وتقديم عروض الأسعار وإدارة التوريدات.",
+    login_email_label: "البريد الإلكتروني للعمل",
+    login_password_label: "كلمة المرور",
+    login_email_placeholder: "name@company.com",
+    login_password_placeholder: "••••••••",
+    login_company_btn: "الدخول إلى بوابة الشركة →",
+    login_supplier_btn: "الدخول إلى بوابة المورد →",
+
+    auth_login_tab: "تسجيل الدخول",
+    auth_register_tab: "إنشاء حساب جديد",
+    reg_company: "🏢 شركة / مشتري",
+    reg_supplier: "🏭 مورد / بائع",
+    reg_step_account: "الحساب",
+    reg_step_company: "الشركة",
+    reg_step_docs: "المستندات",
+    reg_step_review: "المراجعة",
+    reg_account_title: "بيانات الحساب",
+    reg_account_sub: "أنشئ حساب مسؤول الشركة.",
+    reg_full_name: "الاسم بالكامل",
+    reg_job_title: "المسمى الوظيفي",
+    reg_email: "البريد الإلكتروني للعمل",
+    reg_phone: "رقم الموبايل / واتساب",
+    reg_password: "كلمة المرور",
+    reg_password_hint: "8 أحرف على الأقل.",
+    reg_company_title: "بيانات الشركة",
+    reg_company_sub: "بيانات النشاط التجاري الرسمية.",
+    reg_company_name: "اسم الشركة القانوني",
+    reg_cr_number: "رقم السجل التجاري",
+    reg_tax_number: "الرقم الضريبي",
+    reg_sector: "القطاع",
+    reg_choose: "اختر القطاع",
+    reg_city: "المحافظة / المدينة",
+    reg_address: "العنوان",
+    reg_docs_title: "مستندات اعتماد الشركة",
+    reg_docs_sub: "ارفع المستندات الرسمية للمراجعة.",
+    reg_docs_notice: "نسخة العرض الحالية تجريبية. لا ترفع مستندات حقيقية حساسة هنا؛ عند تشغيل الـBackend سيتم حفظها في Private Storage.",
+    reg_commercial: "السجل التجاري",
+    reg_tax_card: "البطاقة الضريبية",
+    reg_upload_hint: "PDF / JPG / PNG",
+    reg_no_file: "لم يتم اختيار ملف",
+    reg_review_title: "مراجعة الطلب",
+    reg_review_sub: "تأكد من البيانات قبل إرسال طلب الاعتماد.",
+    reg_after_submit_title: "بعد الإرسال",
+    reg_after_submit: "سيتم إنشاء الحساب بحالة Under Review إلى أن تتم مراجعة الشركة واعتمادها.",
+    reg_back: "رجوع",
+    reg_next: "التالي ←",
+    reg_submit: "إرسال طلب التسجيل ←",
+    reg_under_review: "UNDER REVIEW",
+    reg_success_title: "تم استلام طلب التسجيل",
+    reg_success_desc: "حسابك جاهز للمراجعة. في النسخة الحقيقية سيتم إرسال رابط التحقق بالبريد ثم مراجعة مستندات الشركة من فريق NovaBid.",
+    reg_done: "إغلاق",
     hero_eyebrow: "منصة الوساطة التجارية العالمية B2B • إحدى شركات Nova Vision Advisory",
     hero_title_1: "نظام رقمي متكامل لإدارة الصفقات",
     hero_title_2: "بين الشركات والموردين بأعلى أمان.",
     hero_desc: "منصة سحابية متقدمة تدعم دورات المشتريات الكاملة (RFQ - Quotations - Orders) مع حسابات وساطة مؤمنة (Escrow) ونظام تحكم مالي احترافي.",
     hero_btn_company: "بوابة الشركات (المشترين) ←",
-    hero_btn_supplier: "بوابة الموردين (البائعين)",
+    hero_btn_supplier: "بوابة المورد (البائع)",
+    tab_company: "🏢 بوابة الشركة (المشتري)",
+    tab_supplier: "🏭 بوابة المورد (البائع)",
+    live_pulse_title: "نبض الصفقات المباشر",
+    live_pulse_demo: "بيانات تجريبية مجهّلة",
+    live_activity_1: "مطابقة RFQ مع 8 موردين معتمدين",
+    live_activity_1_sub: "قطاع صناعي • بيانات مجهّلة",
+    live_activity_2: "استلام 4 عروض أسعار جديدة",
+    live_activity_2_sub: "معدات صناعية • تفاصيل مخفية",
+    live_activity_3: "تأمين مرحلة Escrow لصفقة جديدة",
+    live_activity_3_sub: "توريد B2B • هوية الأطراف محمية",
+    live_activity_4: "إغلاق جولة مقارنة عروض",
+    live_activity_4_sub: "فئة توريد • بدون أسماء أو أسعار حساسة",
     tab_company: "🏢 بوابة الشركات (المشتري)",
     tab_supplier: "🏭 بوابة الموردين (البائع)",
     p_win_company: "NovaBid Company Portal / لوحة تحكم المشتري",
@@ -74,6 +162,7 @@ const translations = {
     opt_corporate: "الخدمات المؤسسية وتكنولوجيا المعلومات",
     calc_label_budget: "حجم مشترياتك الشهرية المتوقعة (جنيه مصري)",
     currency_unit: "ج.م شهرياً",
+    currency_egp: "ج.م",
     res_box_1: "إجمالي التوفير السنوي المتوقع",
     res_box_1_sub: "بنسبة توفير فعلية تصل إلى 16%",
     res_box_2: "الموردون المعتمدون لطلبك",
@@ -116,12 +205,100 @@ const translations = {
     nav_contact: "Contact Us",
     nav_login: "Company Login",
     nav_signup: "Join as Supplier",
+    hero_btn_company: "Company Portal (Buyer) →",
+    hero_btn_supplier: "Supplier Portal (Seller)",
+    c_m_1_sub: "Under review",
+    c_m_2_sub: "From verified suppliers",
+    c_m_3_sub: "Escrow secured",
+    table_view_all: "View all →",
+    company_deal_name: "Automated Hydraulic Components Supply",
+    company_order_no: "RFQ No.: RFQ-2026-89",
+    company_deal_status: "4 quotes received",
+    s_m_1_sub: "New tenders",
+    s_m_2_sub: "Under evaluation",
+    s_m_3_sub: "In fulfillment",
+    supplier_offer_cta: "Submit quotation →",
+    supplier_deal_name: "Advanced Carton Filling Lines",
+    supplier_buyer_location: "Verified buyer • 6th of October",
+    supplier_deal_status: "3 days remaining",
+    inquiry_name: "Company or contact name",
+    inquiry_phone: "Mobile / WhatsApp number",
+    inquiry_details: "Inquiry or deal details...",
+    inquiry_success: "Your request was sent successfully. Our team will contact you shortly.",
+    modal_title: "Portal Login",
+    modal_sub: "Choose your account type on NovaBid",
+    modal_company: "🏢 Company (Buyer)",
+    modal_supplier: "🏭 Supplier (Seller)",
+    modal_company_desc: "You are entering the Company Portal to manage RFQs and quotations.",
+    modal_supplier_desc: "You are entering the Supplier Portal to browse opportunities, submit quotations, and manage fulfillment.",
+    login_email_label: "Business email",
+    login_password_label: "Password",
+    login_email_placeholder: "name@company.com",
+    login_password_placeholder: "••••••••",
+    login_company_btn: "Access Company Portal →",
+    login_supplier_btn: "Access Supplier Portal →",
+
+    auth_login_tab: "Sign in",
+    auth_register_tab: "Create account",
+    reg_company: "🏢 Company / Buyer",
+    reg_supplier: "🏭 Supplier / Seller",
+    reg_step_account: "Account",
+    reg_step_company: "Company",
+    reg_step_docs: "Documents",
+    reg_step_review: "Review",
+    reg_account_title: "Account details",
+    reg_account_sub: "Create the company administrator account.",
+    reg_full_name: "Full name",
+    reg_job_title: "Job title",
+    reg_email: "Business email",
+    reg_phone: "Mobile / WhatsApp",
+    reg_password: "Password",
+    reg_password_hint: "At least 8 characters.",
+    reg_company_title: "Company details",
+    reg_company_sub: "Official business information.",
+    reg_company_name: "Legal company name",
+    reg_cr_number: "Commercial registration number",
+    reg_tax_number: "Tax number",
+    reg_sector: "Sector",
+    reg_choose: "Choose sector",
+    reg_city: "City / Governorate",
+    reg_address: "Address",
+    reg_docs_title: "Business verification documents",
+    reg_docs_sub: "Upload the official documents for review.",
+    reg_docs_notice: "This is an investor-demo version. Do not upload real sensitive documents here; production will use private storage through the backend.",
+    reg_commercial: "Commercial Registration",
+    reg_tax_card: "Tax Card",
+    reg_upload_hint: "PDF / JPG / PNG",
+    reg_no_file: "No file selected",
+    reg_review_title: "Review application",
+    reg_review_sub: "Confirm the information before submitting.",
+    reg_after_submit_title: "After submission",
+    reg_after_submit: "The account will be created with Under Review status until the business is reviewed and approved.",
+    reg_back: "Back",
+    reg_next: "Next →",
+    reg_submit: "Submit registration →",
+    reg_under_review: "UNDER REVIEW",
+    reg_success_title: "Registration received",
+    reg_success_desc: "Your account is ready for review. In production, email verification will happen first, followed by business document review by NovaBid.",
+    reg_done: "Close",
     hero_eyebrow: "Global B2B Procurement Brokerage • A Nova Vision Advisory Company",
     hero_title_1: "Integrated SaaS Platform for B2B Deals",
     hero_title_2: "Connecting Enterprises & Suppliers Securely.",
     hero_desc: "An advanced cloud platform supporting full procurement cycles (RFQ - Quotations - Orders) with secure Escrow accounts and professional financial controls.",
     hero_btn_company: "Company Portal (Buyers) →",
-    hero_btn_supplier: "Supplier Portal (Sellers)",
+    hero_btn_supplier: "Supplier Portal (Seller)",
+    tab_company: "🏢 Company Portal (Buyer)",
+    tab_supplier: "🏭 Supplier Portal (Seller)",
+    live_pulse_title: "Live Deal Pulse",
+    live_pulse_demo: "Anonymized demo data",
+    live_activity_1: "RFQ matched with 8 verified suppliers",
+    live_activity_1_sub: "Industrial sector • identities hidden",
+    live_activity_2: "4 new quotations received",
+    live_activity_2_sub: "Industrial equipment • details masked",
+    live_activity_3: "Escrow milestone secured",
+    live_activity_3_sub: "B2B procurement • parties protected",
+    live_activity_4: "Quote comparison round closed",
+    live_activity_4_sub: "Procurement category • no sensitive names or prices",
     tab_company: "🏢 Company Portal (Buyer)",
     tab_supplier: "🏭 Supplier Portal (Seller)",
     p_win_company: "NovaBid Company Portal / Buyer Workspace",
@@ -181,6 +358,7 @@ const translations = {
     opt_corporate: "Corporate Services & IT",
     calc_label_budget: "Expected Monthly Procurement (EGP)",
     currency_unit: "EGP / month",
+    currency_egp: "EGP",
     res_box_1: "Total Projected Annual Savings",
     res_box_1_sub: "Actual savings rate up to 16%",
     res_box_2: "Verified Suppliers for Your RFQ",
@@ -223,6 +401,94 @@ const translations = {
     nav_contact: "联系我们",
     nav_login: "企业登录",
     nav_signup: "注册供应商",
+    hero_btn_company: "企业门户（买家）→",
+    hero_btn_supplier: "供应商门户（卖家）",
+    tab_company: "🏢 企业门户（买家）",
+    tab_supplier: "🏭 供应商门户（卖家）",
+    live_pulse_title: "实时交易脉搏",
+    live_pulse_demo: "匿名演示数据",
+    live_activity_1: "RFQ 已匹配 8 家认证供应商",
+    live_activity_1_sub: "工业领域 • 身份已隐藏",
+    live_activity_2: "收到 4 份新报价",
+    live_activity_2_sub: "工业设备 • 详情已隐藏",
+    live_activity_3: "交易 Escrow 节点已保障",
+    live_activity_3_sub: "B2B 采购 • 双方身份受保护",
+    live_activity_4: "报价比较轮次已完成",
+    live_activity_4_sub: "采购类别 • 无敏感名称或价格",
+    c_m_1_sub: "审核中",
+    c_m_2_sub: "来自认证供应商",
+    c_m_3_sub: "Escrow 托管保障",
+    table_view_all: "查看全部 →",
+    company_deal_name: "自动化液压元件供应",
+    company_order_no: "询价编号：RFQ-2026-89",
+    company_deal_status: "已收到4份报价",
+    s_m_1_sub: "新招标",
+    s_m_2_sub: "评估中",
+    s_m_3_sub: "履约中",
+    supplier_offer_cta: "提交报价 →",
+    supplier_deal_name: "先进纸箱灌装生产线",
+    supplier_buyer_location: "认证买家 • 十月六日城",
+    supplier_deal_status: "剩余3天",
+    inquiry_name: "公司或联系人姓名",
+    inquiry_phone: "手机 / WhatsApp 号码",
+    inquiry_details: "咨询或交易详情...",
+    inquiry_success: "您的请求已成功发送。我们的团队将尽快与您联系。",
+    modal_title: "门户登录",
+    modal_sub: "请选择您的 NovaBid 账户类型",
+    modal_company: "🏢 企业（买家）",
+    modal_supplier: "🏭 供应商（卖家）",
+    modal_company_desc: "您即将进入企业门户，以管理采购需求（RFQ）和报价。",
+    modal_supplier_desc: "您即将进入供应商门户，以浏览商机、提交报价并管理履约。",
+    login_email_label: "企业邮箱",
+    login_password_label: "密码",
+    login_email_placeholder: "name@company.com",
+    login_password_placeholder: "••••••••",
+    login_company_btn: "进入企业门户 →",
+    login_supplier_btn: "进入供应商门户 →",
+
+    auth_login_tab: "登录",
+    auth_register_tab: "创建账户",
+    reg_company: "🏢 企业 / 买家",
+    reg_supplier: "🏭 供应商 / 卖家",
+    reg_step_account: "账户",
+    reg_step_company: "企业",
+    reg_step_docs: "文件",
+    reg_step_review: "审核",
+    reg_account_title: "账户信息",
+    reg_account_sub: "创建企业管理员账户。",
+    reg_full_name: "姓名",
+    reg_job_title: "职位",
+    reg_email: "工作邮箱",
+    reg_phone: "手机 / WhatsApp",
+    reg_password: "密码",
+    reg_password_hint: "至少8个字符。",
+    reg_company_title: "企业信息",
+    reg_company_sub: "官方企业资料。",
+    reg_company_name: "公司法定名称",
+    reg_cr_number: "商业登记号",
+    reg_tax_number: "税号",
+    reg_sector: "行业",
+    reg_choose: "选择行业",
+    reg_city: "城市 / 省",
+    reg_address: "地址",
+    reg_docs_title: "企业认证文件",
+    reg_docs_sub: "上传官方文件以供审核。",
+    reg_docs_notice: "这是投资人演示版本。请勿上传真实敏感文件；正式版本将通过后端保存到私有存储。",
+    reg_commercial: "商业登记",
+    reg_tax_card: "税卡",
+    reg_upload_hint: "PDF / JPG / PNG",
+    reg_no_file: "未选择文件",
+    reg_review_title: "审核申请",
+    reg_review_sub: "提交前请确认信息。",
+    reg_after_submit_title: "提交后",
+    reg_after_submit: "账户将进入 Under Review 状态，直到企业完成审核。",
+    reg_back: "返回",
+    reg_next: "下一步 →",
+    reg_submit: "提交注册 →",
+    reg_under_review: "UNDER REVIEW",
+    reg_success_title: "已收到注册申请",
+    reg_success_desc: "账户已进入审核队列。正式版本将先进行邮箱验证，再由 NovaBid 团队审核企业文件。",
+    reg_done: "关闭",
     hero_eyebrow: "全球B2B商业经纪与采购平台 • Nova Vision Advisory 旗下公司",
     hero_title_1: "一体化B2B交易管理SaaS平台",
     hero_title_2: "安全连结企业与优质供应商。",
@@ -288,6 +554,7 @@ const translations = {
     opt_corporate: "企业服务与信息技术",
     calc_label_budget: "预计每月采购额（埃及镑）",
     currency_unit: "埃及镑 / 月",
+    currency_egp: "埃及镑",
     res_box_1: "预计年度总节约额",
     res_box_1_sub: "实际节约率高达 16%",
     res_box_2: "匹配您的采购认证供应商",
@@ -347,126 +614,441 @@ if (tiltDashboard) {
   });
 }
 
-// Portal Switcher in Hero (Company vs Supplier only for public)
-function switchPortalTab(role) {
-  document.querySelectorAll('.pt-tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
+// Portal Switcher in Hero — restores the original buyer/supplier dashboard preview
+function switchPortalTab(role, clickedButton) {
+  // The two large Hero buttons are the actual Buyer/Supplier dashboard switcher.
+  const companyBtn = document.getElementById('portalChoiceCompany');
+  const supplierBtn = document.getElementById('portalChoiceSupplier');
+  [companyBtn, supplierBtn].forEach(btn => btn?.classList.remove('active'));
+  if (clickedButton) clickedButton.classList.add('active');
+
+  // Keep the selected button visually primary.
+  if (companyBtn && supplierBtn) {
+    companyBtn.classList.toggle('btn-primary', role === 'company');
+    companyBtn.classList.toggle('btn-ghost', role !== 'company');
+    supplierBtn.classList.toggle('btn-primary', role === 'supplier');
+    supplierBtn.classList.toggle('btn-ghost', role !== 'supplier');
+  }
 
   const viewCompany = document.getElementById('viewCompany');
   const viewSupplier = document.getElementById('viewSupplier');
   const winTitle = document.getElementById('portalWindowTitle');
+  const previewBody = document.getElementById('portalPreviewBody');
   const dict = translations[currentLang];
 
-  viewCompany.style.display = 'none';
-  viewSupplier.style.display = 'none';
+  if (!viewCompany || !viewSupplier || !winTitle) return;
 
-  if (role === 'company') {
-    viewCompany.style.display = 'block';
-    winTitle.textContent = dict['p_win_company'];
-  } else if (role === 'supplier') {
-    viewSupplier.style.display = 'block';
-    winTitle.textContent = dict['p_win_supplier'];
+  // Swap the actual dashboard content below the buttons.
+  viewCompany.style.display = role === 'company' ? 'block' : 'none';
+  viewSupplier.style.display = role === 'supplier' ? 'block' : 'none';
+  winTitle.textContent = dict[role === 'company' ? 'p_win_company' : 'p_win_supplier'];
+
+  const dashboard = document.getElementById('tiltDashboard');
+  if (dashboard) {
+    dashboard.classList.remove('portal-switching');
+    void dashboard.offsetWidth;
+    dashboard.classList.add('portal-switching');
+  }
+  if (previewBody) {
+    previewBody.classList.remove('dashboard-content-switch');
+    void previewBody.offsetWidth;
+    previewBody.classList.add('dashboard-content-switch');
   }
 }
 
-// Auth + Registration Controller — Investor Demo MVP
+// Anonymized live-deal pulse. This is intentionally demo/aggregate data only.
+const liveActivities = [
+  {key:'live_activity_1', sub:'live_activity_1_sub', icon:'↗'},
+  {key:'live_activity_2', sub:'live_activity_2_sub', icon:'◈'},
+  {key:'live_activity_3', sub:'live_activity_3_sub', icon:'✓'},
+  {key:'live_activity_4', sub:'live_activity_4_sub', icon:'≋'}
+];
+let liveActivityIndex = 0;
+let livePulseTimer;
+
+function updateLivePulse() {
+  const dict = translations[currentLang];
+  const item = liveActivities[liveActivityIndex % liveActivities.length];
+  const main = document.getElementById('livePulseMain');
+  const sub = document.getElementById('livePulseSub');
+  const icon = document.getElementById('livePulseIcon');
+  const time = document.getElementById('livePulseTime');
+  const bar = document.getElementById('livePulseBar');
+  if (!main || !sub) return;
+
+  main.classList.remove('pulse-swap');
+  sub.classList.remove('pulse-swap');
+  void main.offsetWidth;
+  main.textContent = dict[item.key];
+  sub.textContent = dict[item.sub];
+  if (icon) icon.textContent = item.icon;
+  if (time) time.textContent = dict.live_pulse_now || (currentLang === 'en' ? 'Now' : currentLang === 'zh' ? '刚刚' : 'الآن');
+  if (bar) {
+    bar.style.animation = 'none';
+    void bar.offsetWidth;
+    bar.style.animation = 'liveProgress 4.8s linear forwards';
+  }
+  main.classList.add('pulse-swap');
+  sub.classList.add('pulse-swap');
+  liveActivityIndex++;
+}
+
+function startLivePulse() {
+  updateLivePulse();
+  clearInterval(livePulseTimer);
+  livePulseTimer = setInterval(updateLivePulse, 4800);
+}
+
+// Auth + Registration Controller
 const authModal = document.getElementById('authModal');
 const authModalTitle = document.getElementById('authModalTitle');
 const authModalSub = document.getElementById('authModalSub');
 const roleDescBox = document.getElementById('roleDescBox');
 const loginBtnText = document.getElementById('loginBtnText');
-let currentAuthMode = 'login';
+
 let currentModalRole = 'company';
+let currentAuthMode = 'login';
 let registrationRole = 'company';
 let registrationStep = 1;
 
-function openAuthModal(role='company', mode='login') {
-  authModal.classList.add('active');
-  authModal.setAttribute('aria-hidden','false');
-  setModalRole(role);
+function openAuthModal(role = 'company', mode = 'login') {
+  currentModalRole = role;
+  authModal?.classList.add('active');
+  authModal?.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
   setAuthMode(mode);
-}
-function closeAuthModal(){ authModal.classList.remove('active'); authModal.setAttribute('aria-hidden','true'); }
-
-function setAuthMode(mode){
-  currentAuthMode=mode;
-  document.getElementById('modeLogin').classList.toggle('active',mode==='login');
-  document.getElementById('modeRegister').classList.toggle('active',mode==='register');
-  document.getElementById('loginPanel').style.display=mode==='login'?'block':'none';
-  document.getElementById('registerPanel').style.display=mode==='register'?'block':'none';
-  document.getElementById('registrationSuccess').style.display='none';
-  if(mode==='register') setRegistrationRole(currentModalRole);
-  else setModalRole(currentModalRole);
+  if (mode === 'login') setModalRole(role);
+  if (mode === 'register') setRegistrationRole(role);
+  setTimeout(() => {
+    const target = mode === 'login' ? document.getElementById('loginEmail') : document.getElementById('regFullName');
+    target?.focus();
+  }, 120);
 }
 
-function setModalRole(role){
-  currentModalRole=role;
-  document.getElementById('loginRoleCompany').classList.toggle('active',role==='company');
-  document.getElementById('loginRoleSupplier').classList.toggle('active',role==='supplier');
-  const dict=translations[currentLang];
-  if(role==='company'){
-    authModalTitle.textContent=currentLang==='en'?'Company / Buyer':(currentLang==='zh'?'企业/买家':'الشركة / المشتري');
-    roleDescBox.textContent=currentLang==='en'?'Manage RFQs, track quotations, and execute secure B2B orders.':'إدارة طلبات الشراء RFQ ومتابعة عروض الأسعار والصفقات.';
-    loginBtnText.textContent=currentLang==='en'?'Access Company Dashboard →':'الدخول إلى بوابة الشركات ←';
-  }else{
-    authModalTitle.textContent=currentLang==='en'?'Supplier / Seller':(currentLang==='zh'?'供应商/卖家':'المورد / البائع');
-    roleDescBox.textContent=currentLang==='en'?'Browse opportunities, submit quotations, and manage fulfillment.':'تصفح الفرص، تقديم عروض الأسعار، وإدارة التوريدات.';
-    loginBtnText.textContent=currentLang==='en'?'Access Supplier Dashboard →':'الدخول إلى بوابة الموردين ←';
+function closeAuthModal() {
+  authModal?.classList.remove('active');
+  authModal?.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+  resetRegistration();
+}
+
+function setAuthMode(mode) {
+  currentAuthMode = mode;
+  const loginPanel = document.getElementById('loginPanel');
+  const registerPanel = document.getElementById('registerPanel');
+  const loginTab = document.getElementById('authModeLogin');
+  const registerTab = document.getElementById('authModeRegister');
+  const dict = translations[currentLang];
+
+  loginPanel.style.display = mode === 'login' ? 'block' : 'none';
+  registerPanel.style.display = mode === 'register' ? 'block' : 'none';
+  loginTab.classList.toggle('active', mode === 'login');
+  registerTab.classList.toggle('active', mode === 'register');
+
+  authModalTitle.textContent = mode === 'login' ? dict.modal_title : (dict.auth_register_tab || 'Create account');
+  authModalSub.textContent = mode === 'login' ? dict.modal_sub : (dict.reg_docs_sub || '');
+
+  if (mode === 'register') {
+    registrationStep = 1;
+    renderRegistrationStep();
   }
-  if(currentAuthMode==='register') setRegistrationRole(role);
 }
 
-function setRegistrationRole(role){
-  registrationRole=role; currentModalRole=role;
-  document.getElementById('registerRoleCompany').classList.toggle('active',role==='company');
-  document.getElementById('registerRoleSupplier').classList.toggle('active',role==='supplier');
+function setModalRole(role) {
+  currentModalRole = role;
+  document.querySelectorAll('#loginPanel .auth-tab').forEach(t => t.classList.remove('active'));
+  const dict = translations[currentLang];
+  const company = document.getElementById('modalTabCompany');
+  const supplier = document.getElementById('modalTabSupplier');
+  const isCompany = role === 'company';
+
+  (isCompany ? company : supplier)?.classList.add('active');
+  authModalTitle.textContent = dict.modal_title;
+  authModalSub.textContent = dict.modal_sub;
+  roleDescBox.textContent = isCompany ? dict.modal_company_desc : dict.modal_supplier_desc;
+  loginBtnText.textContent = isCompany ? dict.login_company_btn : dict.login_supplier_btn;
 }
 
-function registrationNext(step){
-  if(step>registrationStep){
-    const current=document.querySelector(`.register-step[data-step="${registrationStep}"]`);
-    if(current && !current.querySelector('input,select,textarea')) return;
-    if(registrationStep===2){
-      const ids=['regFullName','regEmail','regPhone','regPassword','regCompanyName','regCrNumber','regTaxNumber'];
-      if(!ids.every(id=>document.getElementById(id).reportValidity())) return;
-    }
-    if(registrationStep===3){
-      const a=document.getElementById('regCommercialDoc'),b=document.getElementById('regTaxDoc');
-      if(!a.files.length || !b.files.length){ alert('من فضلك اختر السجل التجاري والبطاقة الضريبية.'); return; }
+function setRegistrationRole(role) {
+  registrationRole = role;
+  document.querySelectorAll('#registerPanel .auth-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(role === 'company' ? 'registerRoleCompany' : 'registerRoleSupplier')?.classList.add('active');
+  renderRegistrationStep();
+}
+
+function renderRegistrationStep() {
+  const dict = translations[currentLang];
+  document.querySelectorAll('.registration-step-panel').forEach(panel => {
+    panel.classList.toggle('active', Number(panel.dataset.panel) === registrationStep);
+  });
+  document.querySelectorAll('.registration-step').forEach(step => {
+    const n = Number(step.dataset.step);
+    step.classList.toggle('active', n === registrationStep);
+    step.classList.toggle('completed', n < registrationStep);
+  });
+
+  const progress = document.getElementById('registrationProgressBar');
+  if (progress) progress.style.width = `${((registrationStep - 1) / 3) * 100}%`;
+
+  const back = document.getElementById('registrationBackBtn');
+  const next = document.getElementById('registrationNextBtn');
+  const submit = document.getElementById('registrationSubmitBtn');
+  if (back) back.style.display = registrationStep > 1 ? 'inline-flex' : 'none';
+  if (next) {
+    next.style.display = registrationStep < 4 ? 'inline-flex' : 'none';
+    next.textContent = dict.reg_next;
+  }
+  if (submit) {
+    submit.style.display = registrationStep === 4 ? 'inline-flex' : 'none';
+    submit.textContent = dict.reg_submit;
+  }
+
+  if (registrationStep === 4) updateRegistrationSummary();
+}
+
+function validateRegistrationStep() {
+  const panel = document.querySelector(`.registration-step-panel[data-panel="${registrationStep}"]`);
+  if (!panel) return true;
+
+  const required = panel.querySelectorAll('input[required], select[required]');
+  for (const field of required) {
+    if (!field.checkValidity()) {
+      field.reportValidity();
+      field.focus();
+      return false;
     }
   }
-  registrationStep=step;
-  document.querySelectorAll('.register-step').forEach(s=>s.classList.toggle('active',Number(s.dataset.step)===step));
-  document.querySelectorAll('.wizard-steps span').forEach((s,i)=>s.classList.toggle('active',i<step));
-  document.getElementById('wizardProgressFill').style.width=`${(step-1)/3*100}%`;
-  if(step===4) buildRegistrationReview();
+  return true;
 }
-function updateFileLabel(input,id){ document.getElementById(id).textContent=input.files[0]?.name||'PDF / JPG / PNG'; }
-function buildRegistrationReview(){
-  const v=id=>document.getElementById(id)?.value||'—';
-  const role=registrationRole==='company'?'شركة / مشتري':'مورد / بائع';
-  document.getElementById('registrationReview').innerHTML=`<div><span>نوع الحساب</span><b>${role}</b></div><div><span>المسؤول</span><b>${v('regFullName')}</b></div><div><span>الشركة</span><b>${v('regCompanyName')}</b></div><div><span>البريد</span><b>${v('regEmail')}</b></div><div><span>Commercial Registration</span><b>${document.getElementById('regCommercialDoc').files[0]?.name||'—'}</b></div><div><span>Tax Card</span><b>${document.getElementById('regTaxDoc').files[0]?.name||'—'}</b></div>`;
+
+function nextRegistrationStep() {
+  // This is deliberately a normal JS button flow: no backend is needed for the investor demo.
+  if (!validateRegistrationStep()) return;
+  if (registrationStep < 4) {
+    registrationStep += 1;
+    renderRegistrationStep();
+  }
 }
-function handleRegistrationSubmit(e){
+
+function previousRegistrationStep() {
+  if (registrationStep > 1) {
+    registrationStep -= 1;
+    renderRegistrationStep();
+  }
+}
+
+function updateRegistrationSummary() {
+  const dict = translations[currentLang];
+  const get = id => document.getElementById(id)?.value?.trim() || '—';
+  const roleLabel = registrationRole === 'company' ? dict.reg_company : dict.reg_supplier;
+  const commercial = document.getElementById('regCommercialDocument')?.files?.[0]?.name || dict.reg_no_file;
+  const tax = document.getElementById('regTaxDocument')?.files?.[0]?.name || dict.reg_no_file;
+  const box = document.getElementById('registrationSummary');
+  if (!box) return;
+
+  box.innerHTML = `
+    <div class="summary-row"><span>${dict.reg_company}</span><strong>${roleLabel}</strong></div>
+    <div class="summary-row"><span>${dict.reg_full_name}</span><strong>${get('regFullName')}</strong></div>
+    <div class="summary-row"><span>${dict.reg_email}</span><strong>${get('regEmail')}</strong></div>
+    <div class="summary-row"><span>${dict.reg_company_name}</span><strong>${get('regCompanyName')}</strong></div>
+    <div class="summary-row"><span>${dict.reg_cr_number}</span><strong>${get('regCrNumber')}</strong></div>
+    <div class="summary-row"><span>${dict.reg_tax_number}</span><strong>${get('regTaxNumber')}</strong></div>
+    <div class="summary-row"><span>${dict.reg_commercial}</span><strong>${commercial}</strong></div>
+    <div class="summary-row"><span>${dict.reg_tax_card}</span><strong>${tax}</strong></div>
+  `;
+}
+
+function handleRegistrationSubmit(e) {
   e.preventDefault();
-  const data={role:registrationRole,email:document.getElementById('regEmail').value,companyName:document.getElementById('regCompanyName').value,status:'UNDER_REVIEW',createdAt:new Date().toISOString()};
-  localStorage.setItem('novabid_demo_registration',JSON.stringify(data));
-  document.getElementById('registerPanel').style.display='none';
-  document.querySelector('.auth-mode-tabs').style.display='none';
-  document.querySelector('.auth-header').style.display='none';
-  document.getElementById('registrationSuccess').style.display='block';
-  document.getElementById('successRole').textContent=registrationRole==='company'?'Company / Buyer':'Supplier / Seller';
+  if (registrationStep !== 4) {
+    nextRegistrationStep();
+    return;
+  }
+
+  if (!validateRegistrationStep()) return;
+
+  document.getElementById('registrationForm').style.display = 'none';
+  document.getElementById('registrationSuccess').style.display = 'block';
+  // Demo-only state. No real document is uploaded anywhere.
+  console.log('NovaBid demo registration:', {
+    role: registrationRole,
+    status: 'UNDER_REVIEW'
+  });
 }
-function handlePortalLogin(e){
+
+function resetRegistration() {
+  const form = document.getElementById('registrationForm');
+  const success = document.getElementById('registrationSuccess');
+  if (form) form.reset();
+  if (form) form.style.display = 'block';
+  if (success) success.style.display = 'none';
+  registrationStep = 1;
+  registrationRole = 'company';
+  document.getElementById('registerRoleCompany')?.classList.add('active');
+  document.getElementById('registerRoleSupplier')?.classList.remove('active');
+  document.getElementById('commercialFileName')?.replaceChildren(document.createTextNode(translations[currentLang].reg_no_file));
+  document.getElementById('taxFileName')?.replaceChildren(document.createTextNode(translations[currentLang].reg_no_file));
+  renderRegistrationStep();
+}
+
+function handlePortalLogin(e) {
   e.preventDefault();
-  const role=currentModalRole==='company'?'Company / Buyer':'Supplier / Seller';
-  alert(`Investor Demo: Login successful for ${role}. Production authentication will be handled by the backend API.`);
+  const dict = translations[currentLang];
+  alert(dict.inquiry_success || 'Success');
   closeAuthModal();
 }
 
-// Close on backdrop / Escape
-if(authModal){
-  authModal.addEventListener('click',e=>{if(e.target===authModal)closeAuthModal();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAuthModal();});
+function handleInquirySubmit(e) {
+  e.preventDefault();
+  alert(translations[currentLang].inquiry_success);
 }
 
+authModal?.addEventListener('click', (e) => {
+  if (e.target === authModal) closeAuthModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && authModal?.classList.contains('active')) closeAuthModal();
+});
+
+// File name preview for the demo registration flow.
+document.getElementById('regCommercialDocument')?.addEventListener('change', e => {
+  const file = e.target.files?.[0];
+  document.getElementById('commercialFileName').textContent = file?.name || translations[currentLang].reg_no_file;
+});
+document.getElementById('regTaxDocument')?.addEventListener('change', e => {
+  const file = e.target.files?.[0];
+  document.getElementById('taxFileName').textContent = file?.name || translations[currentLang].reg_no_file;
+});
+
+// Calculator logic
+const budgetRange = document.getElementById('budgetRange');
+const budgetValue = document.getElementById('budgetValue');
+const savingResult = document.getElementById('savingResult');
+const supplierResult = document.getElementById('supplierResult');
+
+if (budgetRange) {
+  budgetRange.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    budgetValue.textContent = val.toLocaleString();
+    
+    const saving = Math.round(val * 12 * 0.16);
+    savingResult.textContent = saving.toLocaleString() + ' ' + (currentLang === 'en' ? 'EGP' : (currentLang === 'zh' ? '埃及镑' : 'ج.م'));
+    
+    const suppliers = Math.min(150, Math.max(12, Math.round(val / 20000)));
+    supplierResult.textContent = currentLang === 'en' ? `${suppliers} Verified Suppliers` : (currentLang === 'zh' ? `${suppliers} 家认证供应商` : `${suppliers} مورّداً معتمداً`);
+  });
+}
+
+// Language Switcher Logic with 100% complete DOM sync
+let currentLang = 'ar';
+const langSelect = document.getElementById('langSelect');
+const htmlRoot = document.getElementById('htmlRoot');
+
+function setLanguage(lang) {
+  currentLang = lang;
+  htmlRoot.setAttribute('lang', lang);
+  htmlRoot.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+
+  const dict = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+  });
+
+  document.title = dict.page_title;
+
+  const sectorSelect = document.getElementById('sectorSelect');
+  if (sectorSelect) {
+    const sectorKeys = ['opt_industrial','opt_packaging','opt_electrical','opt_construction','opt_corporate'];
+    [...sectorSelect.options].forEach((opt, i) => { if (dict[sectorKeys[i]]) opt.textContent = dict[sectorKeys[i]]; });
+  }
+
+  const formSelect = document.querySelector('.contact-form-card select');
+  if (formSelect) {
+    const formKeys = ['f_opt_2','f_opt_3','f_opt_1'];
+    [...formSelect.options].forEach((opt, i) => { if (dict[formKeys[i]]) opt.textContent = dict[formKeys[i]]; });
+  }
+
+  if (currentAuthMode === 'login') setModalRole(currentModalRole);
+  else {
+    authModalTitle.textContent = dict.auth_register_tab || 'Create account';
+    authModalSub.textContent = dict.reg_docs_sub || '';
+    renderRegistrationStep();
+  }
+
+  // Refresh active portal title and the anonymized live activity in the selected language.
+  const activePortal = document.querySelector('.portal-choice.active');
+  const activeRole = activePortal?.id === 'portalChoiceSupplier' ? 'supplier' : 'company';
+  const winTitle = document.getElementById('portalWindowTitle');
+  if (winTitle) winTitle.textContent = dict[activeRole === 'company' ? 'p_win_company' : 'p_win_supplier'];
+  updateLivePulse();
+
+  if (budgetRange) {
+    const val = parseInt(budgetRange.value);
+    const saving = Math.round(val * 12 * 0.16);
+    const currency = lang === 'en' ? 'EGP' : (lang === 'zh' ? '埃及镑' : 'ج.م');
+    savingResult.textContent = saving.toLocaleString() + ' ' + currency;
+    const suppliers = Math.min(150, Math.max(12, Math.round(val / 20000)));
+    const supplierText = lang === 'en' ? `${suppliers} Verified Suppliers` : (lang === 'zh' ? `${suppliers} 家认证供应商` : `${suppliers} مورّداً معتمداً`);
+    supplierResult.textContent = supplierText;
+  }
+}
+
+if (langSelect) {
+  langSelect.addEventListener('change', (e) => {
+    setLanguage(e.target.value);
+  });
+}
+
+// Start the anonymized live-deal demo pulse
+startLivePulse();
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const id = link.getAttribute('href');
+    if (id && id !== '#') {
+      const target = document.querySelector(id);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  });
+});
+
+// Mobile menu toggle
+const menuBtn = document.querySelector('.menu-btn');
+const navLinks = document.querySelector('.nav-links');
+const navActions = document.querySelector('.nav-actions');
+
+if (menuBtn) {
+  menuBtn.addEventListener('click', () => {
+    const isOpen = navLinks.style.display === 'flex';
+    if (isOpen) {
+      navLinks.style.display = 'none';
+      navActions.style.display = 'none';
+    } else {
+      const headerHeight = document.querySelector('.nav-wrap')?.getBoundingClientRect().height || 64;
+      navLinks.style.cssText = `display:flex; flex-direction:column; position:absolute; top:${headerHeight}px; left:0; right:0; background:#ffffff; padding:16px 18px; border-bottom:1px solid #e2e8f0; box-shadow:0 15px 30px rgba(0,0,0,0.1); z-index:100;`;
+      navActions.style.cssText = `display:flex; flex-direction:column; position:absolute; top:${headerHeight + 210}px; left:0; right:0; background:#ffffff; padding:0 18px 18px 18px; gap:10px; z-index:100;`;
+    }
+  });
+}
+
+navLinks?.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 600) {
+      navLinks.style.display = 'none';
+      navActions.style.display = 'none';
+    }
+  });
+});
+
+setLanguage(currentLang);

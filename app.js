@@ -193,7 +193,32 @@ const translations = {
     footer_escrow: "ضمان Escrow",
     footer_calc: "حاسبة التوفير",
     footer_contact: "اتصل بنا",
-    footer_copy: "© 2026 NovaBid. جميع الحقوق محفوظة (الدقى - الجيزة - مصر)."
+    footer_copy: "© 2026 NovaBid. جميع الحقوق محفوظة (الدقى - الجيزة - مصر).",
+    admin_demo: "بوابة الإدارة التجريبية",
+    admin_title: "Business Verification Center",
+    admin_sub: "مراجعة واعتماد حسابات الشركات والموردين",
+    admin_pending: "قيد المراجعة",
+    admin_verified: "تم الاعتماد",
+    admin_changes: "طلب تعديلات",
+    admin_rejected: "مرفوض",
+    admin_total: "إجمالي الطلبات",
+    admin_queue_title: "طلبات اعتماد الأعمال",
+    admin_review: "مراجعة",
+    admin_approve: "اعتماد الشركة",
+    admin_request_changes: "طلب تعديلات",
+    admin_reject: "رفض",
+    admin_buyer: "شركة / مشتري",
+    admin_supplier: "مورد / بائع",
+    admin_documents: "المستندات",
+    admin_cr: "السجل التجاري",
+    admin_tax: "البطاقة الضريبية",
+    admin_status: "الحالة",
+    admin_close: "إغلاق",
+    admin_new_from_registration: "طلب التسجيل الحالي",
+    admin_no_pending: "لا توجد طلبات قيد المراجعة.",
+    admin_verified_msg: "تم اعتماد الشركة بنجاح — الحالة الآن VERIFIED.",
+    admin_changes_msg: "تم تحويل الطلب إلى REQUEST CHANGES.",
+    admin_rejected_msg: "تم رفض الطلب — الحالة الآن REJECTED.",
   },
   en: {
     page_title: "NovaBid — Global B2B Procurement & Escrow Brokerage Platform",
@@ -389,7 +414,32 @@ const translations = {
     footer_escrow: "Escrow Shield",
     footer_calc: "Savings Calculator",
     footer_contact: "Contact Us",
-    footer_copy: "© 2026 NovaBid. All rights reserved (Dokki - Giza - Egypt)."
+    footer_copy: "© 2026 NovaBid. All rights reserved (Dokki - Giza - Egypt).",
+    admin_demo: "Admin Demo",
+    admin_title: "Business Verification Center",
+    admin_sub: "Review and approve buyer and supplier businesses",
+    admin_pending: "Pending Review",
+    admin_verified: "Verified",
+    admin_changes: "Changes Requested",
+    admin_rejected: "Rejected",
+    admin_total: "Total Requests",
+    admin_queue_title: "Business Verification Queue",
+    admin_review: "Review",
+    admin_approve: "Approve Business",
+    admin_request_changes: "Request Changes",
+    admin_reject: "Reject",
+    admin_buyer: "Company / Buyer",
+    admin_supplier: "Supplier / Seller",
+    admin_documents: "Documents",
+    admin_cr: "Commercial Registration",
+    admin_tax: "Tax Card",
+    admin_status: "Status",
+    admin_close: "Close",
+    admin_new_from_registration: "Current Registration",
+    admin_no_pending: "No pending requests.",
+    admin_verified_msg: "Business approved successfully — status is now VERIFIED.",
+    admin_changes_msg: "Request moved to REQUEST CHANGES.",
+    admin_rejected_msg: "Request rejected — status is now REJECTED.",
   },
   zh: {
     page_title: "NovaBid — 全球B2B采购与资金托管经纪平台",
@@ -585,7 +635,32 @@ const translations = {
     footer_escrow: "Escrow 托管",
     footer_calc: "节约计算器",
     footer_contact: "联系我们",
-    footer_copy: "© 2026 NovaBid. 保留所有权利 (埃及 - 吉萨 - 杜基)."
+    footer_copy: "© 2026 NovaBid. 保留所有权利 (埃及 - 吉萨 - 杜基).",
+    admin_demo: "管理演示",
+    admin_title: "Business Verification Center",
+    admin_sub: "审核并认证买家和供应商企业",
+    admin_pending: "待审核",
+    admin_verified: "已认证",
+    admin_changes: "要求修改",
+    admin_rejected: "已拒绝",
+    admin_total: "请求总数",
+    admin_queue_title: "企业认证队列",
+    admin_review: "审核",
+    admin_approve: "认证企业",
+    admin_request_changes: "要求修改",
+    admin_reject: "拒绝",
+    admin_buyer: "企业 / 买家",
+    admin_supplier: "供应商 / 卖家",
+    admin_documents: "文件",
+    admin_cr: "商业注册",
+    admin_tax: "税卡",
+    admin_status: "状态",
+    admin_close: "关闭",
+    admin_new_from_registration: "当前注册",
+    admin_no_pending: "暂无待审核请求。",
+    admin_verified_msg: "企业认证成功 — 状态现在为 VERIFIED。",
+    admin_changes_msg: "请求已转为 REQUEST CHANGES。",
+    admin_rejected_msg: "请求已拒绝 — 状态现在为 REJECTED。",
   }
 };
 
@@ -867,13 +942,26 @@ function handleRegistrationSubmit(e) {
 
   if (!validateRegistrationStep()) return;
 
+  const getValue = id => document.getElementById(id)?.value?.trim() || '—';
+  const currentRequest = {
+    id: 'NB-' + Math.floor(1000 + Math.random() * 8999),
+    company: getValue('regCompanyName'),
+    role: registrationRole,
+    contact: getValue('regEmail'),
+    cr: getValue('regCrNumber'),
+    tax: getValue('regTaxNumber'),
+    crFile: document.getElementById('regCommercialDocument')?.files?.[0]?.name || 'commercial-registration-demo',
+    taxFile: document.getElementById('regTaxDocument')?.files?.[0]?.name || 'tax-card-demo',
+    status: 'PENDING_REVIEW'
+  };
+  const queue = getAdminQueue();
+  queue.unshift(currentRequest);
+  saveAdminQueue(queue);
+  setDemoSessionRole(registrationRole === 'supplier' ? 'supplier' : 'buyer');
+
   document.getElementById('registrationForm').style.display = 'none';
   document.getElementById('registrationSuccess').style.display = 'block';
-  // Demo-only state. No real document is uploaded anywhere.
-  console.log('NovaBid demo registration:', {
-    role: registrationRole,
-    status: 'UNDER_REVIEW'
-  });
+  console.log('NovaBid demo registration:', currentRequest);
 }
 
 function resetRegistration() {
@@ -920,6 +1008,217 @@ document.getElementById('regTaxDocument')?.addEventListener('change', e => {
   const file = e.target.files?.[0];
   document.getElementById('taxFileName').textContent = file?.name || translations[currentLang].reg_no_file;
 });
+
+// Admin Business Verification Demo — UI-only investor flow. No real documents are uploaded.
+const adminModal = document.getElementById('adminModal');
+const adminQueue = document.getElementById('adminQueue');
+const adminStats = document.getElementById('adminStats');
+const adminToast = document.getElementById('adminToast');
+
+const ADMIN_STORAGE_KEY = 'novabid_admin_verification_demo_v1';
+const demoAdminSeed = [
+  {id:'NB-1042', company:'Delta Industrial Solutions', role:'company', contact:'procurement@delta-industrial.demo', cr:'CR-458921', tax:'TX-773201', crFile:'commercial-registration-demo.pdf', taxFile:'tax-card-demo.pdf', crPreview:'Commercial Registration', taxPreview:'Tax Card', reviewComment:'', status:'PENDING_REVIEW', submittedAt:'2026-10-02T08:40:00Z', activity:[{status:'PENDING_REVIEW', at:'2026-10-02T08:40:00Z', comment:'تم استلام طلب التسجيل والمستندات.'}]},
+  {id:'NB-1043', company:'National Packaging Factory', role:'supplier', contact:'sales@national-packaging.demo', cr:'CR-672114', tax:'TX-889420', crFile:'commercial-registration-demo.pdf', taxFile:'tax-card-demo.pdf', crPreview:'Commercial Registration', taxPreview:'Tax Card', reviewComment:'', status:'PENDING_REVIEW', submittedAt:'2026-10-01T11:15:00Z', activity:[{status:'PENDING_REVIEW', at:'2026-10-01T11:15:00Z', comment:'تم استلام طلب التسجيل والمستندات.'}]},
+  {id:'NB-1044', company:'Cairo Electrical Systems', role:'supplier', contact:'info@cairo-electrical.demo', cr:'CR-321778', tax:'TX-551903', crFile:'commercial-registration-demo.pdf', taxFile:'tax-card-demo.pdf', crPreview:'Commercial Registration', taxPreview:'Tax Card', reviewComment:'Documents reviewed and approved in demo.', status:'VERIFIED', submittedAt:'2026-09-28T09:20:00Z', reviewedAt:'2026-09-29T13:10:00Z', activity:[{status:'PENDING_REVIEW', at:'2026-09-28T09:20:00Z', comment:'تم استلام طلب التسجيل والمستندات.'},{status:'VERIFIED', at:'2026-09-29T13:10:00Z', comment:'Documents reviewed and approved in demo.'}]}
+];
+
+function getAdminQueue(){
+  try {
+    const saved = JSON.parse(localStorage.getItem(ADMIN_STORAGE_KEY) || 'null');
+    return Array.isArray(saved) ? saved : demoAdminSeed.map(x => ({...x}));
+  } catch(e){ return demoAdminSeed.map(x => ({...x})); }
+}
+function saveAdminQueue(queue){
+  try { localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify(queue)); } catch(e) {}
+}
+function seedAdminDemo(){
+  const queue = demoAdminSeed.map(x => ({...x, activity:(x.activity || []).map(a => ({...a}))}));
+  saveAdminQueue(queue);
+  switchAdminView('queue');
+  renderAdminQueue();
+}
+function switchAdminView(view){
+  const queue = document.getElementById('adminQueue');
+  const history = document.getElementById('adminHistory');
+  const operations = document.getElementById('adminOperations');
+  const revenue = document.getElementById('adminRevenue');
+  const tabs = {queue:'adminQueueTab',history:'adminHistoryTab',operations:'adminOpsTab',revenue:'adminRevenueTab'};
+  [queue,history,operations,revenue].forEach(el=>{ if(el) el.hidden = true; });
+  Object.entries(tabs).forEach(([key,id])=>document.getElementById(id)?.classList.toggle('active', key===view));
+  if(view==='queue'){ if(queue) queue.hidden=false; renderAdminQueue(); }
+  if(view==='history'){ if(history) history.hidden=false; renderAdminHistory(); }
+  if(view==='operations'){ if(operations) operations.hidden=false; renderAdminOperations(); }
+  if(view==='revenue'){ if(revenue) revenue.hidden=false; renderAdminRevenue(); }
+}
+function formatAdminDate(value){
+  if(!value) return '—';
+  try { return new Intl.DateTimeFormat(currentLang === 'en' ? 'en-US' : 'ar-EG', {dateStyle:'medium', timeStyle:'short'}).format(new Date(value)); }
+  catch(e){ return value; }
+}
+function statusClass(status){
+  return ({PENDING_REVIEW:'pending',VERIFIED:'verified',REQUEST_CHANGES:'changes',REJECTED:'rejected'}[status] || 'pending');
+}
+function renderAdminHistory(){
+  const el = document.getElementById('adminHistory');
+  if(!el) return;
+  const dict = translations[currentLang];
+  const queue = getAdminQueue();
+  const ordered = [...queue].sort((a,b)=>new Date(b.reviewedAt || b.submittedAt || 0) - new Date(a.reviewedAt || a.submittedAt || 0));
+  document.getElementById('adminHistoryCount')?.replaceChildren(document.createTextNode(String(queue.length)));
+  if(!ordered.length){ el.innerHTML = '<div class="admin-empty">لا توجد طلبات في الـ History حالياً.</div>'; return; }
+  el.innerHTML = ordered.map(item => {
+    const activity = Array.isArray(item.activity) && item.activity.length ? item.activity : [{status:item.status,at:item.reviewedAt || item.submittedAt,comment:item.reviewComment || ''}];
+    const timeline = [...activity].reverse().map(event => `
+      <div class="admin-history-event">
+        <span class="admin-history-dot ${statusClass(event.status)}"></span>
+        <div><strong>${escapeAdminHtml(adminStatusLabel(event.status, dict))}</strong><small>${formatAdminDate(event.at)}</small>${event.comment ? `<p>${escapeAdminHtml(event.comment)}</p>` : ''}</div>
+      </div>`).join('');
+    return `<article class="admin-history-card">
+      <div class="admin-history-main">
+        <div><span class="admin-id">${escapeAdminHtml(item.id)}</span><h5>${escapeAdminHtml(item.company)}</h5><span class="admin-role">${item.role==='company' ? dict.admin_buyer : dict.admin_supplier}</span></div>
+        <span class="admin-status ${statusClass(item.status)}">${escapeAdminHtml(adminStatusLabel(item.status, dict))}</span>
+      </div>
+      <div class="admin-history-meta">
+        <div><small>تاريخ الطلب</small><strong>${formatAdminDate(item.submittedAt)}</strong></div>
+        <div><small>آخر مراجعة</small><strong>${formatAdminDate(item.reviewedAt)}</strong></div>
+        <div><small>المستندات</small><strong>${escapeAdminHtml(item.cr)} / ${escapeAdminHtml(item.tax)}</strong></div>
+      </div>
+      ${item.reviewComment ? `<div class="admin-existing-comment"><small>آخر ملاحظة</small><p>${escapeAdminHtml(item.reviewComment)}</p></div>` : ''}
+      <details class="admin-history-timeline"><summary>عرض سجل الحالة بالكامل (${activity.length})</summary><div>${timeline}</div></details>
+    </article>`;
+  }).join('');
+}
+
+function openAdminVerification(){
+  closeAuthModal();
+  adminModal?.classList.add('active');
+  adminModal?.setAttribute('aria-hidden','false');
+  document.body.classList.add('modal-open');
+  switchAdminView('queue');
+}
+function closeAdminVerification(){
+  adminModal?.classList.remove('active');
+  adminModal?.setAttribute('aria-hidden','true');
+  document.body.classList.remove('modal-open');
+}
+function adminStatusLabel(status, dict){
+  return ({PENDING_REVIEW:dict.admin_pending, VERIFIED:dict.admin_verified, REQUEST_CHANGES:dict.admin_changes, REJECTED:dict.admin_rejected}[status] || status);
+}
+function renderAdminQueue(){
+  const dict = translations[currentLang];
+  const queue = getAdminQueue();
+  if(!adminQueue || !adminStats) return;
+  const counts = {total:queue.length,pending:queue.filter(x=>x.status==='PENDING_REVIEW').length,verified:queue.filter(x=>x.status==='VERIFIED').length,changes:queue.filter(x=>x.status==='REQUEST_CHANGES').length,rejected:queue.filter(x=>x.status==='REJECTED').length};
+  document.getElementById('adminQueueCount')?.replaceChildren(document.createTextNode(String(counts.pending)));
+  document.getElementById('adminHistoryCount')?.replaceChildren(document.createTextNode(String(counts.total)));
+  document.getElementById('adminOpsCount')?.replaceChildren(document.createTextNode(String(getMarketplaceData().deals.length)));
+  adminStats.innerHTML = `
+    <div class="admin-stat"><small>${dict.admin_total}</small><strong>${counts.total}</strong></div>
+    <div class="admin-stat pending"><small>${dict.admin_pending}</small><strong>${counts.pending}</strong></div>
+    <div class="admin-stat verified"><small>${dict.admin_verified}</small><strong>${counts.verified}</strong></div>
+    <div class="admin-stat changes"><small>${dict.admin_changes}</small><strong>${counts.changes}</strong></div>
+    <div class="admin-stat rejected"><small>${dict.admin_rejected}</small><strong>${counts.rejected}</strong></div>`;
+
+  const pending = queue.filter(x=>x.status==='PENDING_REVIEW');
+  if(!pending.length){
+    adminQueue.innerHTML = `<div class="admin-empty">✓ ${dict.admin_no_pending}</div>`;
+    return;
+  }
+  adminQueue.innerHTML = pending.map(item => `
+    <article class="admin-card" data-id="${item.id}">
+      <div class="admin-card-top">
+        <div>
+          <span class="admin-id">${item.id}</span>
+          <h5>${escapeAdminHtml(item.company)}</h5>
+          <span class="admin-role">${item.role==='company' ? dict.admin_buyer : dict.admin_supplier}</span>
+        </div>
+        <span class="admin-status pending">${dict.admin_pending}</span>
+      </div>
+      <div class="admin-card-grid">
+        <div><small>${dict.reg_full_name || 'Contact'}</small><strong>${escapeAdminHtml(item.contact)}</strong></div>
+        <div><small>${dict.reg_cr_number || dict.admin_cr}</small><strong>${escapeAdminHtml(item.cr)}</strong></div>
+        <div><small>${dict.reg_tax_number || dict.admin_tax}</small><strong>${escapeAdminHtml(item.tax)}</strong></div>
+      </div>
+      <div class="admin-docs">
+        <button type="button" class="admin-doc-file" onclick="openAdminDocumentViewer('${item.id}','cr')"><span>📄</span><b>${dict.admin_cr}</b><em>${escapeAdminHtml(item.crFile)}</em><small>فتح المستند ↗</small></button>
+        <button type="button" class="admin-doc-file" onclick="openAdminDocumentViewer('${item.id}','tax')"><span>🧾</span><b>${dict.admin_tax}</b><em>${escapeAdminHtml(item.taxFile)}</em><small>فتح المستند ↗</small></button>
+      </div>
+      ${item.reviewComment ? `<div class="admin-existing-comment"><small>آخر ملاحظة مراجعة</small><p>${escapeAdminHtml(item.reviewComment)}</p></div>` : ''}
+      <div class="admin-card-actions">
+        <button class="btn btn-primary" onclick="openAdminReview('${item.id}')">${dict.admin_review}</button>
+        <button class="btn btn-ghost" onclick="adminDecision('${item.id}','changes')">${dict.admin_request_changes}</button>
+        <button class="btn btn-danger" onclick="adminDecision('${item.id}','reject')">${dict.admin_reject}</button>
+      </div>
+    </article>`).join('');
+}
+function escapeAdminHtml(value){
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
+}
+let activeAdminReviewId = null;
+
+function openAdminDocumentViewer(id, type){
+  const item = getAdminQueue().find(x=>x.id===id);
+  if(!item) return;
+  const viewer = document.getElementById('adminDocViewer');
+  const title = document.getElementById('adminDocViewerTitle');
+  const meta = document.getElementById('adminDocViewerMeta');
+  const company = document.getElementById('adminDocumentCompany');
+  const number = document.getElementById('adminDocumentNumber');
+  const business = document.getElementById('adminDocumentBusiness');
+  const comment = document.getElementById('adminReviewComment');
+  const isTax = type === 'tax';
+  title.textContent = isTax ? 'Tax Card' : 'Commercial Registration';
+  meta.textContent = `${item.company} • ${isTax ? item.taxFile : item.crFile} • DEMO`;
+  company.textContent = item.company;
+  number.textContent = isTax ? item.tax : item.cr;
+  business.textContent = item.company;
+  comment.value = item.reviewComment || '';
+  activeAdminReviewId = id;
+  viewer.classList.add('active');
+  viewer.setAttribute('aria-hidden','false');
+}
+function closeAdminDocumentViewer(){
+  const viewer = document.getElementById('adminDocViewer');
+  viewer?.classList.remove('active');
+  viewer?.setAttribute('aria-hidden','true');
+  activeAdminReviewId = null;
+}
+function openAdminReview(id){
+  openAdminDocumentViewer(id,'cr');
+}
+function useAdminComment(text){
+  const el = document.getElementById('adminReviewComment');
+  if(el){ el.value = text; el.focus(); }
+}
+function submitAdminReview(decision){
+  if(!activeAdminReviewId) return;
+  const comment = (document.getElementById('adminReviewComment')?.value || '').trim();
+  if((decision==='changes' || decision==='reject') && !comment){
+    const el = document.getElementById('adminReviewComment');
+    if(el){ el.focus(); el.setCustomValidity('يرجى كتابة سبب التعديل أو الرفض.'); el.reportValidity(); setTimeout(()=>el.setCustomValidity(''),1000); }
+    return;
+  }
+  adminDecision(activeAdminReviewId, decision, comment);
+  closeAdminDocumentViewer();
+}
+function adminDecision(id, decision, comment=''){
+  const queue = getAdminQueue();
+  const item = queue.find(x=>x.id===id);
+  if(!item) return;
+  item.status = decision==='approve' ? 'VERIFIED' : decision==='changes' ? 'REQUEST_CHANGES' : 'REJECTED';
+  item.reviewComment = comment || item.reviewComment || '';
+  item.reviewedAt = new Date().toISOString();
+  item.activity = Array.isArray(item.activity) ? item.activity : [];
+  item.activity.push({status:item.status, at:item.reviewedAt, comment:item.reviewComment});
+  saveAdminQueue(queue);
+  const dict = translations[currentLang];
+  const msg = decision==='approve' ? dict.admin_verified_msg : decision==='changes' ? dict.admin_changes_msg : dict.admin_rejected_msg;
+  if(adminToast){ adminToast.textContent = comment ? `${msg} — ${comment}` : msg; adminToast.className='admin-toast show'; setTimeout(()=>adminToast.classList.remove('show'),3800); }
+  renderAdminQueue();
+  renderAdminHistory();
+}
+
+adminModal?.addEventListener('click', e => { if(e.target===adminModal) closeAdminVerification(); });
 
 // Calculator logic
 const budgetRange = document.getElementById('budgetRange');
@@ -1052,3 +1351,249 @@ navLinks?.querySelectorAll('a').forEach(link => {
 });
 
 setLanguage(currentLang);
+
+// ===================== NovaBid Marketplace Demo =====================
+const MARKET_STORAGE_KEY = 'novabid_marketplace_demo_v2';
+const demoMarketplaceSeed = {
+  rfqs: [
+    {id:'RFQ-2026-89', buyer:'Delta Industrial Solutions', product:'مكونات هيدروليكية آلية', sector:'industrial', quantity:'120 وحدة', specs:'ISO certified components, heavy-duty industrial grade, technical datasheet required.', deadline:'2026-10-14', location:'السادس من أكتوبر', budget:'850,000 ج.م', status:'RECEIVING_QUOTES', createdAt:'2026-10-02T09:00:00Z'},
+    {id:'RFQ-2026-90', buyer:'Delta Industrial Solutions', product:'كابلات طاقة صناعية', sector:'electrical', quantity:'2,500 متر', specs:'Copper conductors, LV industrial cable, IEC compliant.', deadline:'2026-10-18', location:'القاهرة', budget:'1,100,000 ج.م', status:'PUBLISHED', createdAt:'2026-10-02T12:30:00Z'},
+    {id:'RFQ-2026-91', buyer:'Delta Industrial Solutions', product:'عبوات كرتونية مطبوعة', sector:'packaging', quantity:'80,000 قطعة', specs:'5-layer corrugated carton, custom print, food-safe materials.', deadline:'2026-10-20', location:'العاشر من رمضان', budget:'420,000 ج.م', status:'RECEIVING_QUOTES', createdAt:'2026-10-01T15:10:00Z'}
+  ],
+  quotes: [
+    {id:'Q-901', rfqId:'RFQ-2026-89', supplier:'Cairo Fluid Systems', price:'820,000 ج.م', leadTime:'14 يوم', validity:'30 يوم', payment:'Net 30', notes:'ضمان 12 شهر + شحن داخل القاهرة الكبرى', status:'RECEIVED', createdAt:'2026-10-03T08:15:00Z'},
+    {id:'Q-902', rfqId:'RFQ-2026-89', supplier:'National Packaging Factory', price:'845,000 ج.م', leadTime:'10 يوم', validity:'21 يوم', payment:'Net 45', notes:'تسليم على دفعتين حسب جدول الإنتاج', status:'RECEIVED', createdAt:'2026-10-03T09:45:00Z'},
+    {id:'Q-903', rfqId:'RFQ-2026-89', supplier:'Delta Engineering Supplies', price:'835,000 ج.م', leadTime:'12 يوم', validity:'30 يوم', payment:'50% مقدم / 50% عند التسليم', notes:'يشمل الاختبار والتشغيل الأولي', status:'RECEIVED', createdAt:'2026-10-03T10:20:00Z'}
+  ],
+  supplierQuotes: [],
+  supplierDecisions: [
+    {rfqId:'RFQ-2026-89',supplier:'National Packaging Factory',status:'ACCEPTED',updatedAt:'2026-10-03T10:30:00Z'}
+  ],
+  deals: [
+    {id:'DEAL-2026-17', rfqId:'RFQ-2026-84', buyer:'Delta Industrial Solutions', supplier:'Cairo Electrical Systems', value:'1,400,000 ج.م', stage:'IN_TRANSIT', delivery:'2026-10-11', escrow:'FUNDED', carrier:'DHL Freight', tracking:'NBX-784921', eta:'2026-10-11', createdAt:'2026-10-02T09:30:00Z', updatedAt:'2026-10-03T14:20:00Z', dispute:'NONE', milestones:[
+      {key:'CONTRACT',label:'تم إنشاء العقد',status:'DONE',at:'2026-10-02T09:30:00Z'},
+      {key:'FUNDED',label:'تم تأمين الدفعة',status:'DONE',at:'2026-10-02T12:00:00Z'},
+      {key:'PREPARING',label:'المورد يجهز الطلب',status:'DONE',at:'2026-10-03T08:00:00Z'},
+      {key:'SHIPPED',label:'تم الشحن',status:'DONE',at:'2026-10-03T14:20:00Z'},
+      {key:'IN_TRANSIT',label:'قيد النقل',status:'CURRENT',at:'2026-10-03T14:20:00Z'},
+      {key:'DELIVERED',label:'تم التسليم',status:'PENDING'},
+      {key:'ACCEPTED',label:'اعتماد المشتري',status:'PENDING'},
+      {key:'RELEASED',label:'تحرير مستحقات المورد',status:'PENDING'}
+    ]},
+    {id:'DEAL-2026-16', rfqId:'RFQ-2026-82', buyer:'Delta Industrial Solutions', supplier:'National Packaging Factory', value:'845,000 ج.م', stage:'DELIVERED', delivery:'2026-10-04', escrow:'FUNDED', carrier:'Aramex', tracking:'NBX-781244', eta:'2026-10-04', createdAt:'2026-09-28T09:30:00Z', updatedAt:'2026-10-04T16:10:00Z', dispute:'NONE', milestones:[
+      {key:'CONTRACT',label:'تم إنشاء العقد',status:'DONE',at:'2026-09-28T09:30:00Z'},
+      {key:'FUNDED',label:'تم تأمين الدفعة',status:'DONE',at:'2026-09-29T10:00:00Z'},
+      {key:'PREPARING',label:'المورد يجهز الطلب',status:'DONE',at:'2026-09-30T08:00:00Z'},
+      {key:'SHIPPED',label:'تم الشحن',status:'DONE',at:'2026-10-01T12:00:00Z'},
+      {key:'IN_TRANSIT',label:'قيد النقل',status:'DONE',at:'2026-10-03T09:00:00Z'},
+      {key:'DELIVERED',label:'تم التسليم',status:'DONE',at:'2026-10-04T16:10:00Z'},
+      {key:'ACCEPTED',label:'اعتماد المشتري',status:'CURRENT'},
+      {key:'RELEASED',label:'تحرير مستحقات المورد',status:'PENDING'}
+    ]},
+    {id:'DEAL-2026-15', rfqId:'RFQ-2026-80', buyer:'Delta Industrial Solutions', supplier:'Delta Engineering Supplies', value:'620,000 ج.م', stage:'COMPLETED', delivery:'2026-09-25', escrow:'RELEASED', carrier:'Local Fleet', tracking:'NBX-776502', eta:'2026-09-25', createdAt:'2026-09-15T09:30:00Z', updatedAt:'2026-09-27T16:10:00Z', dispute:'NONE', milestones:[
+      {key:'CONTRACT',label:'تم إنشاء العقد',status:'DONE',at:'2026-09-15T09:30:00Z'},
+      {key:'FUNDED',label:'تم تأمين الدفعة',status:'DONE',at:'2026-09-16T10:00:00Z'},
+      {key:'PREPARING',label:'المورد يجهز الطلب',status:'DONE',at:'2026-09-17T08:00:00Z'},
+      {key:'SHIPPED',label:'تم الشحن',status:'DONE',at:'2026-09-19T12:00:00Z'},
+      {key:'IN_TRANSIT',label:'قيد النقل',status:'DONE',at:'2026-09-22T09:00:00Z'},
+      {key:'DELIVERED',label:'تم التسليم',status:'DONE',at:'2026-09-25T15:10:00Z'},
+      {key:'ACCEPTED',label:'اعتماد المشتري',status:'DONE',at:'2026-09-26T11:10:00Z'},
+      {key:'RELEASED',label:'تحرير مستحقات المورد',status:'DONE',at:'2026-09-27T16:10:00Z'}
+    ]}
+  ]
+};
+function getMarketplaceData(){
+  try { const x=JSON.parse(localStorage.getItem(MARKET_STORAGE_KEY)||'null'); return x && x.rfqs ? x : JSON.parse(JSON.stringify(demoMarketplaceSeed)); }
+  catch(e){ return JSON.parse(JSON.stringify(demoMarketplaceSeed)); }
+}
+function saveMarketplaceData(data){ try{localStorage.setItem(MARKET_STORAGE_KEY,JSON.stringify(data));}catch(e){} }
+function getDemoSessionRole(){
+  try { return localStorage.getItem('novabid_demo_session_role') || ''; } catch(e){ return ''; }
+}
+function setDemoSessionRole(role){
+  try { localStorage.setItem('novabid_demo_session_role', role); } catch(e){}
+}
+function goBackFromMarketplace(){ closeMarketplace(); window.scrollTo({top:0,behavior:'smooth'}); }
+function openQuotePdfPreview(id){
+  const d=getMarketplaceData(), q=d.quotes.find(x=>x.id===id) || d.supplierQuotes.find(x=>x.id===id);
+  if(!q) return;
+  const r=d.rfqs.find(x=>x.id===q.rfqId)||{};
+  const esc=v=>escapeAdminHtml(v==null?'—':String(v));
+  const w=window.open('', '_blank');
+  if(!w){ alert('اسمح بفتح التبويبات الجديدة من المتصفح لعرض الـ PDF Preview.'); return; }
+  w.document.write(`<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>${esc(q.id)} - NovaBid Quote</title><style>body{font-family:Arial,Tahoma,sans-serif;background:#eef2f7;margin:0;color:#0f172a}.toolbar{position:sticky;top:0;background:#0f172a;color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}.toolbar button{border:0;border-radius:8px;padding:9px 14px;cursor:pointer;font-weight:700}.page{width:210mm;min-height:297mm;margin:24px auto;background:#fff;padding:18mm;box-sizing:border-box;box-shadow:0 15px 45px rgba(0,0,0,.15);position:relative}.brand{font-size:25px;font-weight:900;letter-spacing:.5px}.brand span{color:#0284c7}.muted{color:#64748b}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}.box{border:1px solid #e2e8f0;border-radius:10px;padding:14px}.box small{display:block;color:#64748b;margin-bottom:5px}.box strong{font-size:14px}.title{font-size:24px;margin:28px 0 6px}.line{height:1px;background:#e2e8f0;margin:20px 0}.notes{line-height:1.9;white-space:pre-wrap}.sign{margin-top:70px;display:grid;grid-template-columns:1fr 1fr;gap:50px}.sign div{border-top:1px solid #94a3b8;padding-top:8px;color:#64748b}.watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:900;color:rgba(2,132,199,.055);transform:rotate(-28deg);pointer-events:none}.footer{position:absolute;bottom:12mm;left:18mm;right:18mm;border-top:1px solid #e2e8f0;padding-top:8px;color:#94a3b8;font-size:10px;display:flex;justify-content:space-between}@media print{body{background:#fff}.toolbar{display:none}.page{margin:0;box-shadow:none;width:210mm;min-height:297mm;page-break-after:always}@page{size:A4;margin:0}}</style></head><body><div class="toolbar"><strong>NovaBid • Quote PDF Preview</strong><button onclick="window.print()">طباعة / حفظ كـ PDF</button></div><main class="page"><div class="watermark">NOVABID</div><div class="brand">NOVA<span>BID</span></div><div class="muted">Official Commercial Quotation • Demo Preview</div><h1 class="title">Quotation ${esc(q.id)}</h1><div class="grid"><div class="box"><small>RFQ</small><strong>${esc(q.rfqId)}</strong></div><div class="box"><small>تاريخ العرض</small><strong>${esc(q.createdAt ? new Date(q.createdAt).toLocaleDateString('en-GB') : '—')}</strong></div><div class="box"><small>المشتري</small><strong>${esc(r.buyer||'—')}</strong></div><div class="box"><small>المورد</small><strong>${esc(q.supplier||'—')}</strong></div><div class="box"><small>المنتج / الخدمة</small><strong>${esc(r.product||'—')}</strong></div><div class="box"><small>الكمية</small><strong>${esc(r.quantity||'—')}</strong></div><div class="box"><small>السعر الإجمالي</small><strong>${esc(q.price)}</strong></div><div class="box"><small>مدة التوريد</small><strong>${esc(q.leadTime)}</strong></div><div class="box"><small>صلاحية العرض</small><strong>${esc(q.validity)}</strong></div><div class="box"><small>شروط الدفع</small><strong>${esc(q.payment)}</strong></div></div><div class="line"></div><h3>المواصفات والمتطلبات</h3><p class="notes">${esc(r.specs||'—')}</p><h3>ملاحظات المورد</h3><p class="notes">${esc(q.notes||'—')}</p><div class="sign"><div>توقيع المورد</div><div>اعتماد المشتري</div></div><div class="footer"><span>${esc(q.id)} • NovaBid Demo</span><span>Generated for presentation only</span></div></main></body></html>`);
+  w.document.close();
+}
+function openMarketplace(role='buyer'){
+  closeAuthModal();
+  const sessionRole=getDemoSessionRole();
+  const resolvedRole=sessionRole==='supplier'?'supplier':sessionRole==='buyer'?'buyer':(role==='supplier'?'supplier':'buyer');
+  const m=document.getElementById('marketModal'); if(!m)return;
+  m.classList.add('active'); m.setAttribute('aria-hidden','false'); document.body.classList.add('modal-open');
+  const buyerTab=document.getElementById('marketBuyerTab'), supplierTab=document.getElementById('marketSupplierTab');
+  const locked=!!sessionRole;
+  if(buyerTab) buyerTab.style.display=locked&&sessionRole!=='buyer'?'none':'';
+  if(supplierTab) supplierTab.style.display=locked&&sessionRole!=='supplier'?'none':'';
+  switchMarketplaceRole(resolvedRole);
+}
+function closeMarketplace(){ const m=document.getElementById('marketModal'); if(m){m.classList.remove('active');m.setAttribute('aria-hidden','true');} document.body.classList.remove('modal-open'); }
+function switchMarketplaceRole(role){
+  const sessionRole=getDemoSessionRole();
+  if(sessionRole && role!==sessionRole) return;
+  const buyer=role==='buyer';
+  document.getElementById('buyerPortalPanel').hidden=!buyer;
+  document.getElementById('supplierPortalPanel').hidden=buyer;
+  document.getElementById('marketBuyerTab')?.classList.toggle('active',buyer);
+  document.getElementById('marketSupplierTab')?.classList.toggle('active',!buyer);
+  document.getElementById('marketTitle').textContent=buyer?'Company Procurement Portal':'Supplier Marketplace Portal';
+  document.getElementById('marketSubtitle').textContent=buyer?'إدارة طلبات الشراء والعروض والصفقات':'استعراض فرص الشراء وتقديم عروض الأسعار';
+  if(buyer) renderBuyerPortal(); else renderSupplierPortal();
+}
+function marketStatusLabel(s){return ({PUBLISHED:'منشور',RECEIVING_QUOTES:'يستقبل عروض',CLOSED:'مغلق',RECEIVED:'عرض مستلم',AWARDED:'تم الترسية',FULFILLMENT:'جاري التنفيذ',COMPLETED:'مكتمل'}[s]||s);}
+function renderBuyerPortal(){
+  const d=getMarketplaceData();
+  const quoteCount=d.quotes.filter(q=>q.status==='RECEIVED').length;
+  document.getElementById('buyerStats').innerHTML=`<div class="market-stat"><small>RFQs النشطة</small><strong>${d.rfqs.filter(r=>r.status!=='CLOSED').length}</strong><span>قيد الاستقبال</span></div><div class="market-stat"><small>العروض المستلمة</small><strong>${quoteCount}</strong><span>من الموردين</span></div><div class="market-stat"><small>الصفقات</small><strong>${d.deals.length}</strong><span>تحت الإدارة</span></div>`;
+  renderBuyerRfqs(); renderBuyerQuotes(); renderBuyerDeals();
+}
+function switchBuyerView(view,btn){
+  ['rfqs','quotes','deals'].forEach(v=>document.getElementById('buyer'+v.charAt(0).toUpperCase()+v.slice(1)+'View').hidden=v!==view);
+  document.querySelectorAll('#buyerPortalPanel .market-tab').forEach(x=>x.classList.remove('active')); btn?.classList.add('active');
+}
+function renderBuyerRfqs(){
+  const el=document.getElementById('buyerRfqsView'), d=getMarketplaceData(); if(!el)return;
+  el.innerHTML=d.rfqs.map(r=>`<article class="market-card"><div class="market-card-top"><div><span class="market-id">${r.id}</span><h4>${escapeAdminHtml(r.product)}</h4><small>${escapeAdminHtml(r.buyer)} • ${escapeAdminHtml(r.location)}</small></div><span class="market-status ${r.status.toLowerCase()}">${marketStatusLabel(r.status)}</span></div><div class="market-card-grid"><div><small>الكمية</small><strong>${escapeAdminHtml(r.quantity)}</strong></div><div><small>الموعد النهائي</small><strong>${escapeAdminHtml(r.deadline)}</strong></div><div><small>الميزانية</small><strong>${escapeAdminHtml(r.budget||'غير محددة')}</strong></div></div><p class="market-specs">${escapeAdminHtml(r.specs)}</p><div class="market-card-actions"><button class="btn btn-ghost btn-sm" onclick="openQuoteCompare('${r.id}')">مقارنة العروض (${d.quotes.filter(q=>q.rfqId===r.id).length})</button><button class="btn btn-primary btn-sm" onclick="showRfqDetails('${r.id}')">تفاصيل RFQ</button></div></article>`).join('') || '<div class="market-empty">لا توجد RFQs حالياً.</div>';
+}
+function renderBuyerQuotes(){
+  const el=document.getElementById('buyerQuotesView'), d=getMarketplaceData(); if(!el)return;
+  el.innerHTML=d.quotes.map(q=>{const r=d.rfqs.find(x=>x.id===q.rfqId)||{};return `<article class="market-card compact"><div class="market-card-top"><div><span class="market-id">${q.id}</span><h4>${escapeAdminHtml(q.supplier)}</h4><small>${escapeAdminHtml(q.rfqId)} • ${escapeAdminHtml(r.product||'RFQ')}</small></div><span class="market-status received">${marketStatusLabel(q.status)}</span></div><div class="market-card-grid"><div><small>السعر</small><strong>${escapeAdminHtml(q.price)}</strong></div><div><small>Lead Time</small><strong>${escapeAdminHtml(q.leadTime)}</strong></div><div><small>الدفع</small><strong>${escapeAdminHtml(q.payment)}</strong></div></div><p class="market-specs">${escapeAdminHtml(q.notes||'—')}</p><div class="market-card-actions"><button class="btn btn-ghost btn-sm" onclick="openQuotePdfPreview('${q.id}')">Preview PDF</button><button class="btn btn-primary btn-sm" onclick="awardQuote('${q.id}')">اختيار العرض / إنشاء Deal</button></div></article>`}).join('') || '<div class="market-empty">لا توجد عروض مستلمة.</div>';
+}
+function renderBuyerDeals(){
+  const el=document.getElementById('buyerDealsView'), d=getMarketplaceData(); if(!el)return;
+  el.innerHTML=d.deals.map(x=>`<article class="market-card compact"><div class="market-card-top"><div><span class="market-id">${x.id}</span><h4>${escapeAdminHtml(x.buyer)} ↔ ${escapeAdminHtml(x.supplier)}</h4><small>${escapeAdminHtml(x.rfqId)}</small></div><span class="market-status ${x.stage.toLowerCase()}">${escapeAdminHtml(dealStageLabel(x.stage))}</span></div><div class="market-card-grid"><div><small>قيمة الصفقة</small><strong>${escapeAdminHtml(x.value)}</strong></div><div><small>التسليم المتوقع</small><strong>${escapeAdminHtml(x.delivery)}</strong></div><div><small>Escrow</small><strong>${escapeAdminHtml(x.escrow)}</strong></div></div><div class="deal-journey">${dealJourneyHtml(x)}</div><div class="market-card-actions"><button class="btn btn-primary btn-sm" onclick="openDealOperations('${x.id}','buyer')">إدارة الصفقة / التتبع</button></div></article>`).join('') || '<div class="market-empty">لا توجد صفقات حالياً.</div>';
+}
+function submitRfq(e){e.preventDefault();const d=getMarketplaceData();const id='RFQ-2026-'+(92+d.rfqs.length);d.rfqs.unshift({id,buyer:'Delta Industrial Solutions',product:document.getElementById('rfqProduct').value.trim(),sector:document.getElementById('rfqSector').value,quantity:document.getElementById('rfqQuantity').value.trim(),specs:document.getElementById('rfqSpecs').value.trim(),deadline:document.getElementById('rfqDeadline').value,location:document.getElementById('rfqLocation').value.trim(),budget:document.getElementById('rfqBudget').value.trim()||'غير محددة',status:'PUBLISHED',createdAt:new Date().toISOString()});saveMarketplaceData(d);document.getElementById('rfqForm').reset();closeRfqComposer();renderBuyerPortal();switchBuyerView('rfqs',document.querySelector('#buyerPortalPanel .market-tab'));alert(`تم نشر ${id} بنجاح للموردين المؤهلين.`);}
+function openQuoteCompare(rfqId){const d=getMarketplaceData(),r=d.rfqs.find(x=>x.id===rfqId),qs=d.quotes.filter(q=>q.rfqId===rfqId);document.getElementById('quoteCompareTitle').textContent=`مقارنة عروض — ${r?.product||rfqId}`;document.getElementById('quoteCompareBody').innerHTML=qs.length?`<div class="quote-table-wrap"><table class="quote-table"><thead><tr><th>المورد</th><th>السعر</th><th>التوريد</th><th>الدفع</th><th>الصلاحية</th><th></th></tr></thead><tbody>${qs.map(q=>`<tr><td><strong>${escapeAdminHtml(q.supplier)}</strong></td><td>${escapeAdminHtml(q.price)}</td><td>${escapeAdminHtml(q.leadTime)}</td><td>${escapeAdminHtml(q.payment)}</td><td>${escapeAdminHtml(q.validity)}</td><td><button class="btn btn-ghost btn-sm" onclick="openQuotePdfPreview('${q.id}')">Preview PDF</button> <button class="btn btn-primary btn-sm" onclick="awardQuote('${q.id}');closeQuoteCompare()">اختيار</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="market-empty">لم تصل عروض لهذا RFQ بعد.</div>';document.getElementById('quoteCompareModal')?.classList.add('active');document.getElementById('quoteCompareModal')?.setAttribute('aria-hidden','false');}
+function closeQuoteCompare(){document.getElementById('quoteCompareModal')?.classList.remove('active');document.getElementById('quoteCompareModal')?.setAttribute('aria-hidden','true');}
+function awardQuote(id){const d=getMarketplaceData(),q=d.quotes.find(x=>x.id===id);if(!q)return;if(!confirm(`تأكيد اختيار ${q.supplier} وإنشاء Deal؟`))return;q.status='AWARDED'; const sq=(d.supplierQuotes||[]).find(x=>x.id===q.id || (x.rfqId===q.rfqId&&x.supplier===q.supplier)); if(sq) sq.status='AWARDED'; const r=d.rfqs.find(x=>x.id===q.rfqId);if(r)r.status='CLOSED'; const now=new Date().toISOString(); d.deals.unshift({id:'DEAL-2026-'+(18+d.deals.length),rfqId:q.rfqId,buyer:r?.buyer||'Delta Industrial Solutions',supplier:q.supplier,value:q.price,stage:'CONTRACT_CREATED',delivery:r?.deadline||'يتم تحديده بالعقد',escrow:'PENDING_FUNDING',carrier:'سيتم التحديد',tracking:'—',eta:r?.deadline||'—',createdAt:now,updatedAt:now,dispute:'NONE',milestones:[{key:'CONTRACT',label:'تم إنشاء العقد',status:'CURRENT',at:now},{key:'FUNDED',label:'تم تأمين الدفعة',status:'PENDING'},{key:'PREPARING',label:'المورد يجهز الطلب',status:'PENDING'},{key:'SHIPPED',label:'تم الشحن',status:'PENDING'},{key:'IN_TRANSIT',label:'قيد النقل',status:'PENDING'},{key:'DELIVERED',label:'تم التسليم',status:'PENDING'},{key:'ACCEPTED',label:'اعتماد المشتري',status:'PENDING'},{key:'RELEASED',label:'تحرير مستحقات المورد',status:'PENDING'}]});saveMarketplaceData(d);renderBuyerPortal();alert('تمت الترسية وإنشاء Deal تجريبي.');openDealOperations(d.deals[0].id,'buyer');}
+function getSupplierDecision(d,rfqId){
+  return (d.supplierDecisions||[]).find(x=>x.rfqId===rfqId&&x.supplier==='National Packaging Factory');
+}
+function setSupplierDecision(rfqId,decision){
+  const d=getMarketplaceData(); d.supplierDecisions=d.supplierDecisions||[];
+  const existing=getSupplierDecision(d,rfqId);
+  if(existing) existing.status=decision, existing.updatedAt=new Date().toISOString();
+  else d.supplierDecisions.push({rfqId,supplier:'National Packaging Factory',status:decision,updatedAt:new Date().toISOString()});
+  saveMarketplaceData(d); renderSupplierPortal();
+}
+function acceptSupplierRfq(rfqId){ setSupplierDecision(rfqId,'ACCEPTED'); alert('تم قبول طلب الشراء. يمكنك الآن تقديم عرض سعر.'); }
+function rejectSupplierRfq(rfqId){ if(!confirm('هل تريد رفض طلب الشراء هذا؟')) return; setSupplierDecision(rfqId,'REJECTED'); alert('تم رفض طلب الشراء ولن يتم تقديم عرض لهذا الطلب.'); }
+function switchSupplierView(view,btn){
+  const opp=document.getElementById('supplierOpportunitiesView'), quotes=document.getElementById('supplierQuotesView'), deals=document.getElementById('supplierDealsView');
+  [opp,quotes,deals].forEach(el=>{if(el)el.hidden=true;});
+  document.querySelectorAll('#supplierViewTabs .market-tab').forEach(t=>t.classList.remove('active')); if(btn)btn.classList.add('active');
+  if(view==='quotes'){ renderSupplierQuotes(); return; }
+  if(view==='deals'){ renderSupplierDeals(); return; }
+  renderSupplierOpportunities(view==='accepted');
+}
+function renderSupplierPortal(){
+  const d=getMarketplaceData(); d.supplierDecisions=d.supplierDecisions||[]; d.supplierQuotes=d.supplierQuotes||[]; saveMarketplaceData(d);
+  const openCount=d.rfqs.filter(r=>r.status!=='CLOSED').length; const accepted=d.supplierDecisions.filter(x=>x.status==='ACCEPTED').length; const submitted=d.supplierQuotes.length;
+  document.getElementById('supplierStats').innerHTML=`<div class="market-stat"><small>طلبات الشراء المتاحة</small><strong>${openCount}</strong><span>فرص قابلة للمراجعة</span></div><div class="market-stat"><small>تم القبول</small><strong>${accepted}</strong><span>طلبات يمكن تقديم عروض عليها</span></div><div class="market-stat"><small>عروضي</small><strong>${submitted}</strong><span>قيد المتابعة</span></div>`;
+  const firstTab=document.querySelector('#supplierViewTabs .market-tab'); switchSupplierView('opportunities',firstTab);
+}
+function getSupplierDecision(d,rfqId){return (d.supplierDecisions||[]).find(x=>x.rfqId===rfqId&&x.supplier==='National Packaging Factory');}
+function renderSupplierOpportunities(acceptedOnly=false){
+  const el=document.getElementById('supplierOpportunitiesView'),d=getMarketplaceData(),sector=document.getElementById('supplierSectorFilter')?.value||'all'; if(!el)return; el.hidden=false; const quotesView=document.getElementById('supplierQuotesView'); if(quotesView)quotesView.hidden=true; const dealsView=document.getElementById('supplierDealsView'); if(dealsView)dealsView.hidden=true;
+  const list=d.rfqs.filter(r=>r.status!=='CLOSED'&&(sector==='all'||r.sector===sector)).filter(r=>!acceptedOnly||getSupplierDecision(d,r.id)?.status==='ACCEPTED');
+  el.innerHTML=list.length?list.map(r=>{const decision=getSupplierDecision(d,r.id), existingQuote=d.supplierQuotes.find(q=>q.rfqId===r.id&&q.supplier==='National Packaging Factory'); let action=''; if(existingQuote) action=`<span class="market-status received">✓ تم إرسال العرض</span><button class="btn btn-ghost btn-sm" onclick="openQuotePdfPreview('${existingQuote.id}')">Preview PDF</button>`; else if(decision?.status==='ACCEPTED') action=`<span class="market-status accepted">✓ تم القبول</span><button class="btn btn-primary btn-sm" onclick="openQuoteComposer('${r.id}')">تقديم عرض سعر ←</button>`; else if(decision?.status==='REJECTED') action=`<span class="market-status rejected">✕ تم الرفض</span>`; else action=`<button class="btn btn-primary btn-sm" onclick="supplierDecision('${r.id}','ACCEPTED')">قبول الطلب</button><button class="btn btn-danger btn-sm" onclick="supplierDecision('${r.id}','REJECTED')">رفض الطلب</button>`; return `<article class="market-card"><div class="market-card-top"><div><span class="market-id">${r.id}</span><h4>${escapeAdminHtml(r.product)}</h4><small>${escapeAdminHtml(r.buyer)} • ${escapeAdminHtml(r.location)}</small></div><span class="market-status ${r.status.toLowerCase()}">${marketStatusLabel(r.status)}</span></div><div class="market-card-grid"><div><small>الكمية</small><strong>${escapeAdminHtml(r.quantity)}</strong></div><div><small>آخر موعد</small><strong>${escapeAdminHtml(r.deadline)}</strong></div><div><small>الميزانية</small><strong>${escapeAdminHtml(r.budget||'غير محددة')}</strong></div></div><p class="market-specs">${escapeAdminHtml(r.specs)}</p><div class="market-card-actions"><button class="btn btn-ghost btn-sm" onclick="showRfqDetails('${r.id}')">تفاصيل RFQ</button>${action}</div></article>`}).join(''):`<div class="market-empty">${acceptedOnly?'لا توجد طلبات مقبولة حالياً.':'لا توجد فرص شراء مطابقة حالياً.'}</div>`;
+}
+function supplierDecision(rfqId,status){const d=getMarketplaceData();d.supplierDecisions=d.supplierDecisions||[];let x=d.supplierDecisions.find(v=>v.rfqId===rfqId&&v.supplier==='National Packaging Factory');if(!x){x={rfqId,supplier:'National Packaging Factory',status,updatedAt:new Date().toISOString()};d.supplierDecisions.push(x);}else{x.status=status;x.updatedAt=new Date().toISOString();}saveMarketplaceData(d);renderSupplierPortal();alert(status==='ACCEPTED'?'تم قبول طلب الشراء. يمكنك الآن تقديم عرض سعر.':'تم رفض طلب الشراء.');}
+function renderSupplierQuotes(){const el=document.getElementById('supplierQuotesView'),opp=document.getElementById('supplierOpportunitiesView'),deals=document.getElementById('supplierDealsView'),d=getMarketplaceData();if(!el)return;el.hidden=false;if(opp)opp.hidden=true;if(deals)deals.hidden=true;el.innerHTML=d.supplierQuotes.length?d.supplierQuotes.map(q=>`<article class="market-card compact"><div class="market-card-top"><div><span class="market-id">${q.id}</span><h4>${escapeAdminHtml(q.supplier)}</h4><small>${q.rfqId}</small></div><span class="market-status ${q.status==='AWARDED'?'fulfillment':'received'}">${q.status==='SUBMITTED'?'مرسل للمشتري':q.status==='AWARDED'?'تمت الترسية':'مرفوض'}</span></div><div class="market-card-grid"><div><small>السعر</small><strong>${escapeAdminHtml(q.price)}</strong></div><div><small>التوريد</small><strong>${escapeAdminHtml(q.leadTime)}</strong></div><div><small>الدفع</small><strong>${escapeAdminHtml(q.payment)}</strong></div></div><p class="market-specs">${escapeAdminHtml(q.notes||'—')}</p><div class="market-card-actions"><button class="btn btn-ghost btn-sm" onclick="openQuotePdfPreview('${q.id}')">Preview PDF</button></div></article>`).join(''):'<div class="market-empty"><strong>لم تقدم عروضاً بعد.</strong><br><span>اقبل طلب شراء من الفرص المتاحة ثم قدّم عرض السعر.</span></div>'; }
+function renderSupplierDeals(){const el=document.getElementById('supplierDealsView'),opp=document.getElementById('supplierOpportunitiesView'),quotes=document.getElementById('supplierQuotesView'),d=getMarketplaceData();if(!el)return;el.hidden=false;if(opp)opp.hidden=true;if(quotes)quotes.hidden=true;const mine=d.deals.filter(x=>x.supplier==='National Packaging Factory');el.innerHTML=mine.length?mine.map(x=>`<article class="market-card compact"><div class="market-card-top"><div><span class="market-id">${x.id}</span><h4>${escapeAdminHtml(x.buyer)}</h4><small>${escapeAdminHtml(x.rfqId)} • ${escapeAdminHtml(x.supplier)}</small></div><span class="market-status ${x.stage.toLowerCase()}">${escapeAdminHtml(dealStageLabel(x.stage))}</span></div><div class="market-card-grid"><div><small>قيمة الصفقة</small><strong>${escapeAdminHtml(x.value)}</strong></div><div><small>التتبع</small><strong>${escapeAdminHtml(x.tracking||'—')}</strong></div><div><small>التسليم المتوقع</small><strong>${escapeAdminHtml(x.eta||x.delivery||'—')}</strong></div></div><div class="deal-journey">${dealJourneyHtml(x)}</div><div class="market-card-actions"><button class="btn btn-primary btn-sm" onclick="openDealOperations('${x.id}','supplier')">إدارة التنفيذ</button></div></article>`).join(''):'<div class="market-empty">لا توجد صفقات مسندة إليك حالياً.</div>'; }
+function openQuoteComposer(rfqId){const d=getMarketplaceData(),r=d.rfqs.find(x=>x.id===rfqId),decision=getSupplierDecision(d,rfqId);if(decision?.status!=='ACCEPTED'){alert('يجب قبول طلب الشراء أولاً قبل تقديم عرض السعر.');return;}document.getElementById('quoteRfqId').value=rfqId;document.getElementById('quoteComposerSub').textContent=`${rfqId} • ${r?.product||''} • ${r?.quantity||''}`;document.getElementById('quoteComposer')?.classList.add('active');document.getElementById('quoteComposer')?.setAttribute('aria-hidden','false');}
+function closeQuoteComposer(){document.getElementById('quoteComposer')?.classList.remove('active');document.getElementById('quoteComposer')?.setAttribute('aria-hidden','true');}
+function submitQuote(e){e.preventDefault();const d=getMarketplaceData(),rfqId=document.getElementById('quoteRfqId').value;if(getSupplierDecision(d,rfqId)?.status!=='ACCEPTED'){alert('اقبل طلب الشراء أولاً.');return;}if(d.supplierQuotes.some(q=>q.rfqId===rfqId&&q.supplier==='National Packaging Factory')){alert('تم تقديم عرض لهذا RFQ بالفعل في النسخة التجريبية.');return;}const q={id:'Q-S-'+(100+d.supplierQuotes.length),rfqId,supplier:'National Packaging Factory',price:document.getElementById('quotePrice').value.trim(),leadTime:document.getElementById('quoteLeadTime').value.trim(),validity:document.getElementById('quoteValidity').value.trim(),payment:document.getElementById('quotePayment').value,notes:document.getElementById('quoteNotes').value.trim(),status:'SUBMITTED',createdAt:new Date().toISOString()};d.supplierQuotes.unshift(q);d.quotes.push({...q,status:'RECEIVED'});saveMarketplaceData(d);document.getElementById('quoteForm').reset();closeQuoteComposer();renderSupplierPortal();alert('تم إرسال عرض السعر للمشتري بنجاح.');}
+// Use the existing login flow as the gateway into the demo portals.
+const originalHandlePortalLogin = handlePortalLogin;
+handlePortalLogin = function(e){
+  e.preventDefault();
+  const role = document.getElementById('modalTabSupplier')?.classList.contains('active') ? 'supplier' : 'buyer';
+  setDemoSessionRole(role);
+  closeAuthModal();
+  openMarketplace(role);
+};
+
+function parseMoney(value){const n=Number(String(value||'').replace(/[^0-9.]/g,''));return Number.isFinite(n)?n:0;}
+function dealJourneyHtml(deal){const ms=Array.isArray(deal.milestones)?deal.milestones:[];return ms.map((m,i)=>`<span class="${m.status==='DONE'?'done':m.status==='CURRENT'?'current':''}">${escapeAdminHtml(m.label)}</span>${i<ms.length-1?'<i>→</i>':''}`).join('');}
+function dealStageLabel(stage){return ({CONTRACT_CREATED:'العقد تم إنشاؤه',PENDING_FUNDING:'في انتظار تأمين الدفعة',PREPARING:'جاري التجهيز',SHIPPED:'تم الشحن',IN_TRANSIT:'قيد النقل',DELIVERED:'تم التسليم',ACCEPTED:'تم اعتماد التسليم',COMPLETED:'مكتملة'}[stage]||marketStatusLabel(stage));}
+function renderDealOpsBody(deal,role){const el=document.getElementById('dealOpsBody');if(!el)return;const d=getMarketplaceData();const fee=Math.round(parseMoney(deal.value)*0.02);const milestones=Array.isArray(deal.milestones)?deal.milestones:[];const canSupplierUpdate=role==='supplier' && deal.supplier==='National Packaging Factory';const canBuyerAccept=role==='buyer' && deal.stage==='DELIVERED';el.innerHTML=`
+  <div class="deal-ops-summary">
+    <div><small>Deal ID</small><strong>${escapeAdminHtml(deal.id)}</strong></div><div><small>الحالة</small><strong>${escapeAdminHtml(dealStageLabel(deal.stage))}</strong></div><div><small>قيمة الصفقة</small><strong>${escapeAdminHtml(deal.value)}</strong></div><div><small>NovaBid Fee (2% Demo)</small><strong>${fee.toLocaleString()} ج.م</strong></div>
+  </div>
+  <div class="deal-ops-grid">
+    <section class="deal-ops-panel"><div class="panel-title"><h4>Execution Timeline</h4><span class="market-status fulfillment">${escapeAdminHtml(dealStageLabel(deal.stage))}</span></div><div class="deal-timeline">${milestones.map((m,i)=>`<div class="deal-timeline-item ${m.status.toLowerCase()}"><div class="deal-timeline-marker">${m.status==='DONE'?'✓':m.status==='CURRENT'?'●':'○'}</div><div><strong>${escapeAdminHtml(m.label)}</strong><small>${m.at?formatAdminDate(m.at):'بانتظار التنفيذ'}</small></div></div>`).join('')}</div></section>
+    <section class="deal-ops-panel"><div class="panel-title"><h4>Shipment & Documents</h4></div><div class="deal-info-list"><div><span>Carrier</span><strong>${escapeAdminHtml(deal.carrier||'—')}</strong></div><div><span>Tracking</span><strong>${escapeAdminHtml(deal.tracking||'—')}</strong></div><div><span>ETA</span><strong>${escapeAdminHtml(deal.eta||deal.delivery||'—')}</strong></div><div><span>Escrow</span><strong>${escapeAdminHtml(deal.escrow||'—')}</strong></div></div><div class="deal-doc-chips"><span>📄 Contract</span><span>🧾 Invoice</span><span>🚚 Shipping Doc</span><span>📦 Proof of Delivery</span></div></section>
+  </div>
+  <div class="deal-ops-actions"><div class="deal-action-note">${canSupplierUpdate?'المورد يمكنه تحديث مرحلة التنفيذ من هنا.':canBuyerAccept?'التسليم مسجل؛ المشتري يستطيع اعتماد الاستلام لتحرير المستحقات.':'هذه معاينة تشغيلية للصفقة في وضع المستثمر.'}</div>${canSupplierUpdate && !['DELIVERED','ACCEPTED','COMPLETED'].includes(deal.stage)?`<button class="btn btn-primary" onclick="advanceDeal('${deal.id}')">تحديث المرحلة التالية →</button>`:''}${canBuyerAccept?`<button class="btn btn-primary" onclick="acceptDealDelivery('${deal.id}')">✓ اعتماد التسليم وتحرير المستحقات</button>`:''}<button class="btn btn-danger" onclick="raiseDealDispute('${deal.id}')">فتح Dispute تجريبي</button></div>`;}
+function openDealOperations(id,role){const d=getMarketplaceData(),deal=d.deals.find(x=>x.id===id);if(!deal)return;document.getElementById('dealOpsTitle').textContent=`إدارة الصفقة ${deal.id}`;document.getElementById('dealOpsSubtitle').textContent=`${deal.buyer} ↔ ${deal.supplier} • متابعة الشحن والتسليم والتحصيل`;document.getElementById('dealOperationsModal')?.classList.add('active');document.getElementById('dealOperationsModal')?.setAttribute('aria-hidden','false');renderDealOpsBody(deal,role||'buyer');document.body.classList.add('modal-open');}
+let activeDealRole='buyer';
+function closeDealOperations(){document.getElementById('dealOperationsModal')?.classList.remove('active');document.getElementById('dealOperationsModal')?.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');}
+function advanceDeal(id){const d=getMarketplaceData(),deal=d.deals.find(x=>x.id===id);if(!deal)return;const order=['CONTRACT_CREATED','FUNDED','PREPARING','SHIPPED','IN_TRANSIT','DELIVERED','ACCEPTED','COMPLETED'];let idx=order.indexOf(deal.stage);if(idx<0)idx=0;const next=order[Math.min(idx+1,order.length-1)];const labelMap={FUNDED:'تم تأمين الدفعة',PREPARING:'المورد يجهز الطلب',SHIPPED:'تم الشحن',IN_TRANSIT:'قيد النقل',DELIVERED:'تم التسليم',ACCEPTED:'اعتماد المشتري',COMPLETED:'تحرير مستحقات المورد'};deal.stage=next;deal.escrow=next==='FUNDED'||['PREPARING','SHIPPED','IN_TRANSIT','DELIVERED'].includes(next)?'FUNDED':next==='COMPLETED'?'RELEASED':deal.escrow;deal.updatedAt=new Date().toISOString();deal.milestones=(deal.milestones||[]).map(m=>m.key===next?{...m,status:'CURRENT',at:deal.updatedAt}:m.status==='CURRENT'?{...m,status:'DONE',at:m.at||deal.updatedAt}:m);saveMarketplaceData(d);renderSupplierPortal();renderBuyerPortal();renderAdminOperations();renderAdminRevenue();renderDealOpsBody(deal,'supplier');alert(`تم تحديث الصفقة إلى: ${dealStageLabel(next)}`);}
+function acceptDealDelivery(id){const d=getMarketplaceData(),deal=d.deals.find(x=>x.id===id);if(!deal)return;deal.stage='COMPLETED';deal.escrow='RELEASED';deal.updatedAt=new Date().toISOString();deal.milestones=(deal.milestones||[]).map(m=>m.key==='ACCEPTED'?{...m,status:'DONE',at:deal.updatedAt}:m.key==='RELEASED'?{...m,status:'DONE',at:deal.updatedAt}:m);saveMarketplaceData(d);renderBuyerPortal();renderSupplierPortal();renderAdminOperations();renderAdminRevenue();renderDealOpsBody(deal,'buyer');alert('تم اعتماد التسليم وتحرير المستحقات في الـ Demo.');}
+function raiseDealDispute(id){const d=getMarketplaceData(),deal=d.deals.find(x=>x.id===id);if(!deal)return;deal.dispute='OPEN';deal.updatedAt=new Date().toISOString();saveMarketplaceData(d);renderAdminOperations();alert('تم فتح Dispute تجريبي وسيظهر في لوحة الإدارة.');}
+function renderAdminOperations(){const el=document.getElementById('adminOperations');if(!el)return;const d=getMarketplaceData();const deals=d.deals||[];const active=deals.filter(x=>!['COMPLETED'].includes(x.stage));const inTransit=deals.filter(x=>x.stage==='IN_TRANSIT').length;const delivered=deals.filter(x=>x.stage==='DELIVERED').length;const disputes=deals.filter(x=>x.dispute==='OPEN').length;el.innerHTML=`<div class="admin-command-grid"><div class="admin-command-stat"><small>Active Deals</small><strong>${active.length}</strong></div><div class="admin-command-stat"><small>In Transit</small><strong>${inTransit}</strong></div><div class="admin-command-stat"><small>Delivered / Awaiting Acceptance</small><strong>${delivered}</strong></div><div class="admin-command-stat danger"><small>Open Disputes</small><strong>${disputes}</strong></div></div><div class="admin-ops-list">${deals.map(x=>`<article class="admin-ops-card"><div class="admin-history-main"><div><span class="admin-id">${x.id}</span><h5>${escapeAdminHtml(x.buyer)} ↔ ${escapeAdminHtml(x.supplier)}</h5><span class="admin-role">${escapeAdminHtml(x.rfqId)}</span></div><span class="admin-status ${x.stage==='COMPLETED'?'verified':x.stage==='IN_TRANSIT'?'changes':'pending'}">${escapeAdminHtml(dealStageLabel(x.stage))}</span></div><div class="admin-history-meta"><div><small>قيمة الصفقة</small><strong>${escapeAdminHtml(x.value)}</strong></div><div><small>التتبع</small><strong>${escapeAdminHtml(x.tracking||'—')}</strong></div><div><small>التسليم</small><strong>${escapeAdminHtml(x.eta||x.delivery||'—')}</strong></div></div><div class="deal-journey">${dealJourneyHtml(x)}</div><div class="market-card-actions"><button class="btn btn-primary btn-sm" onclick="openDealOperations('${x.id}','admin')">فتح الصفقة</button>${x.dispute==='OPEN'?'<span class="market-status rejected">DISPUTE OPEN</span>':''}</div></article>`).join('')||'<div class="admin-empty">لا توجد صفقات حالياً.</div>'}</div>`;}
+function renderAdminRevenue(){const el=document.getElementById('adminRevenue');if(!el)return;const d=getMarketplaceData(),deals=d.deals||[];const gmv=deals.reduce((a,x)=>a+parseMoney(x.value),0);const completed=deals.filter(x=>x.stage==='COMPLETED');const completedGmv=completed.reduce((a,x)=>a+parseMoney(x.value),0);const feeRate=.02;const revenue=gmv*feeRate;const realized=completedGmv*feeRate;const avg=deals.length?gmv/deals.length:0;el.innerHTML=`<div class="revenue-hero"><div><small>Marketplace GMV • Demo</small><strong>${gmv.toLocaleString()} ج.م</strong><span>إجمالي قيمة الصفقات الظاهرة</span></div><div><small>NovaBid Revenue • 2% Demo Take Rate</small><strong>${revenue.toLocaleString()} ج.م</strong><span>إيراد تقديري على الصفقات المعروضة</span></div></div><div class="admin-command-grid"><div class="admin-command-stat"><small>Total Deals</small><strong>${deals.length}</strong></div><div class="admin-command-stat"><small>Completed Deals</small><strong>${completed.length}</strong></div><div class="admin-command-stat"><small>Avg. Deal Value</small><strong>${Math.round(avg).toLocaleString()} ج.م</strong></div><div class="admin-command-stat"><small>Realized Revenue</small><strong>${Math.round(realized).toLocaleString()} ج.م</strong></div></div><div class="revenue-chart"><div class="panel-title"><h4>GMV vs NovaBid Revenue</h4><span>Illustrative Demo</span></div><div class="revenue-bars"><div><span style="height:${Math.min(100,gmv?100:0)}%"></span><small>GMV</small><b>${gmv.toLocaleString()} ج.م</b></div><div><span style="height:${Math.min(100,revenue/gmv*100||0)}%"></span><small>Revenue</small><b>${Math.round(revenue).toLocaleString()} ج.م</b></div><div><span style="height:${Math.min(100,completedGmv/gmv*100||0)}%"></span><small>Completed GMV</small><b>${completedGmv.toLocaleString()} ج.م</b></div></div></div><p class="revenue-note">الأرقام هنا تجريبية لأغراض العرض على المستثمر، وليست إيرادات فعلية أو بيانات محاسبية.</p>`;}
+
+// Make the hero CTA buttons launch the same full demo marketplace.
+document.getElementById('viewCompany')?.querySelector('.btn')?.addEventListener('click',()=>openMarketplace('buyer'));
+document.getElementById('viewSupplier')?.querySelector('.btn')?.addEventListener('click',()=>openMarketplace('supplier'));
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeInvestorDemo();closeMarketplace();closeRfqComposer();closeQuoteComposer();closeQuoteCompare();closeDealOperations();closeAdminVerification();}});
+
+// Investor Demo Hub — executive walkthrough layer for investor presentations.
+function openInvestorDemo(){
+  const modal=document.getElementById('investorDemoModal');
+  if(!modal)return;
+  closeAuthModal();
+  closeMarketplace();
+  closeAdminVerification();
+  modal.classList.add('active'); modal.setAttribute('aria-hidden','false'); document.body.classList.add('modal-open');
+  renderInvestorDemo();
+}
+function closeInvestorDemo(){
+  const modal=document.getElementById('investorDemoModal');
+  if(!modal)return;
+  modal.classList.remove('active'); modal.setAttribute('aria-hidden','true'); document.body.classList.remove('modal-open');
+}
+function renderInvestorDemo(){
+  const d=getMarketplaceData(), deals=d.deals||[], rfqs=d.rfqs||[], quotes=d.quotes||[];
+  const completed=deals.filter(x=>x.stage==='COMPLETED');
+  const gmv=deals.reduce((a,x)=>a+parseMoney(x.value),0);
+  const revenue=gmv*.02;
+  const verified=getAdminQueue().filter(x=>x.status==='VERIFIED').length;
+  const k=document.getElementById('investorKpis');
+  if(k) k.innerHTML=`<div><small>Marketplace GMV</small><strong>${gmv.toLocaleString()} ج.م</strong><span>Demo</span></div><div><small>Platform Revenue</small><strong>${Math.round(revenue).toLocaleString()} ج.م</strong><span>2% illustrative take rate</span></div><div><small>Verified Businesses</small><strong>${verified}</strong><span>Demo verification</span></div><div><small>Active Deals</small><strong>${deals.filter(x=>x.stage!=='COMPLETED').length}</strong><span>Operational pipeline</span></div>`;
+  document.getElementById('invRfqs')?.replaceChildren(document.createTextNode(String(rfqs.length)));
+  document.getElementById('invQuotes')?.replaceChildren(document.createTextNode(String(quotes.length)));
+  document.getElementById('invDeals')?.replaceChildren(document.createTextNode(String(deals.length)));
+  document.getElementById('invCompleted')?.replaceChildren(document.createTextNode(String(completed.length)));
+  const econ=document.getElementById('investorEconomics');
+  if(econ){
+    const example=deals[0]; const val=example?parseMoney(example.value):50000; const fee=Math.round(val*.02);
+    econ.innerHTML=`<div><span>Example Deal Value</span><strong>${val.toLocaleString()} ج.م</strong></div><div><span>Supplier / Trade Value</span><strong>${Math.max(0,val-fee).toLocaleString()} ج.م</strong></div><div><span>NovaBid Fee</span><strong>${fee.toLocaleString()} ج.م</strong></div><div><span>Take Rate</span><strong>2.0%</strong></div>`;
+  }
+  const notifications=[
+    {icon:'📋',title:'RFQ matched with verified suppliers',sub:'Buyer procurement request is now in the marketplace.'},
+    {icon:'💬',title:'New quotation received',sub:'Supplier submitted a commercial offer for an active RFQ.'},
+    {icon:'🏆',title:'Quote awarded',sub:'Buyer selected a supplier and a Deal was created.'},
+    {icon:'🚚',title:'Shipment status updated',sub:'Active Deal moved through fulfillment and logistics.'},
+    {icon:'💰',title:'Platform fee recognized',sub:'Illustrative NovaBid revenue calculated at the demo take rate.'}
+  ];
+  const n=document.getElementById('investorNotifications');
+  if(n)n.innerHTML=notifications.map(x=>`<div class="investor-notification"><span>${x.icon}</span><div><strong>${x.title}</strong><small>${x.sub}</small></div><b>NEW</b></div>`).join('');
+  document.getElementById('investorNotificationCount')?.replaceChildren(document.createTextNode(`${notifications.length} updates`));
+}
+function launchInvestorBuyer(){closeInvestorDemo();openMarketplace('buyer');}
+function launchInvestorSupplier(){closeInvestorDemo();openMarketplace('supplier');}
+function launchInvestorAdmin(){closeInvestorDemo();openAdminVerification();}

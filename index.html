@@ -81,6 +81,10 @@
           <button class="btn btn-primary btn-lg portal-choice active" id="portalChoiceCompany" onclick="switchPortalTab('company', this)" data-i18n="hero_btn_company">بوابة الشركة (المشتري) <span>←</span></button>
           <button class="btn btn-ghost btn-lg portal-choice" id="portalChoiceSupplier" onclick="switchPortalTab('supplier', this)" data-i18n="hero_btn_supplier">بوابة المورد (البائع)</button>
         </div>
+        <div class="investor-launch-wrap reveal delay-3">
+          <button class="investor-launch-btn" type="button" onclick="openInvestorDemo()">▶ إطلاق Investor Demo</button>
+          <span>رحلة كاملة من RFQ إلى الصفقة والإيراد</span>
+        </div>
 
       </div>
 
@@ -98,7 +102,7 @@
               <div class="preview-main full-width" id="viewCompany">
                 <div class="preview-head">
                   <div><small data-i18n="c_dv_sub">إدارة طلبات الشراء (RFQs) وعروض الأسعار</small><h3 data-i18n="c_dv_title">مرحباً بك، شركة الصناعات الهندسية</h3></div>
-                  <button class="btn btn-sm btn-primary" onclick="alert('الانتقال لصفحة إنشاء طلب توريد RFQ جديد')"><span data-i18n="c_new_rfq">+ إنشاء طلب توريد جديد (RFQ)</span></button>
+                  <button class="btn btn-sm btn-primary" onclick="openMarketplace('buyer')"><span data-i18n="c_new_rfq">+ إنشاء طلب توريد جديد (RFQ)</span></button>
                 </div>
                 <div class="metric-row">
                   <div class="metric-card"><small data-i18n="c_m_1">طلبات الشراء النشطة</small><strong>12</strong><em data-i18n="c_m_1_sub">قيد المراجعة</em></div>
@@ -120,7 +124,7 @@
               <div class="preview-main full-width" id="viewSupplier" style="display:none;">
                 <div class="preview-head">
                   <div><small data-i18n="s_dv_sub">استعراض الفرص وتقديم عروض الأسعار</small><h3 data-i18n="s_dv_title">مرحباً بك، المصنع الوطني للتغليف</h3></div>
-                  <button class="btn btn-sm btn-primary" onclick="alert('استعراض المناقصات المتاحة للتقديم')"><span data-i18n="s_browse">تصفح المناقصات المتاحة</span></button>
+                  <button class="btn btn-sm btn-primary" onclick="openMarketplace('supplier')"><span data-i18n="s_browse">تصفح المناقصات المتاحة</span></button>
                 </div>
                 <div class="metric-row">
                   <div class="metric-card"><small data-i18n="s_m_1">الفرص المتاحة لقطاعك</small><strong>24</strong><em data-i18n="s_m_1_sub">مناقصة جديدة</em></div>
@@ -576,8 +580,208 @@
           <span class="success-status" data-i18n="reg_under_review">UNDER REVIEW</span>
           <h4 data-i18n="reg_success_title">تم استلام طلب التسجيل</h4>
           <p data-i18n="reg_success_desc">حسابك جاهز للمراجعة. في النسخة الحقيقية سيتم إرسال رابط التحقق بالبريد ثم مراجعة مستندات الشركة من فريق NovaBid.</p>
-          <button type="button" class="btn btn-primary" onclick="closeAuthModal()" data-i18n="reg_done">إغلاق</button>
+          <div class="registration-success-actions">
+            <button type="button" class="btn btn-ghost" onclick="closeAuthModal()" data-i18n="reg_done">إغلاق</button>
+            <button type="button" class="btn btn-primary" onclick="openAdminVerification()" data-i18n="admin_demo">بوابة الإدارة التجريبية</button>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKETPLACE DEMO PORTAL -->
+  <div class="market-modal" id="marketModal" aria-hidden="true">
+    <div class="market-modal-content">
+      <div class="market-head">
+        <div><span class="admin-kicker">NOVA<span>BID</span> • MARKETPLACE</span><h3 id="marketTitle">Company Procurement Portal</h3><p id="marketSubtitle">إدارة طلبات الشراء والعروض والصفقات</p></div>
+        <div class="market-head-actions"><button type="button" class="btn btn-ghost btn-sm market-back-btn" onclick="goBackFromMarketplace()">← رجوع</button><button type="button" class="close-modal" onclick="closeMarketplace()" aria-label="Close">×</button></div>
+      </div>
+      <div class="market-role-tabs" id="marketRoleTabs">
+        <button class="market-role-tab active" id="marketBuyerTab" onclick="switchMarketplaceRole('buyer')">🏢 المشتري</button>
+        <button class="market-role-tab" id="marketSupplierTab" onclick="switchMarketplaceRole('supplier')">🏭 المورد</button>
+      </div>
+      <div id="buyerPortalPanel">
+        <div class="market-stats" id="buyerStats"></div>
+        <div class="market-toolbar">
+          <div class="market-tabs">
+            <button class="market-tab active" onclick="switchBuyerView('rfqs',this)">طلبات الشراء RFQs</button>
+            <button class="market-tab" onclick="switchBuyerView('quotes',this)">العروض المستلمة</button>
+            <button class="market-tab" onclick="switchBuyerView('deals',this)">الصفقات</button>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="openRfqComposer()">+ إنشاء RFQ جديد</button>
+        </div>
+        <div id="buyerRfqsView" class="market-view"></div>
+        <div id="buyerQuotesView" class="market-view" hidden></div>
+        <div id="buyerDealsView" class="market-view" hidden></div>
+      </div>
+      <div id="supplierPortalPanel" hidden>
+        <div class="market-stats" id="supplierStats"></div>
+        <div class="market-toolbar">
+          <div class="market-tabs" id="supplierViewTabs">
+            <button class="market-tab active" onclick="switchSupplierView('opportunities',this)">الفرص المتاحة</button>
+            <button class="market-tab" onclick="switchSupplierView('accepted',this)">الطلبات المقبولة</button>
+            <button class="market-tab" onclick="switchSupplierView('quotes',this)">عروضي</button>
+            <button class="market-tab" onclick="switchSupplierView('deals',this)">الصفقات والتنفيذ</button>
+          </div>
+          <div class="market-filter"><select id="supplierSectorFilter" onchange="renderSupplierOpportunities()"><option value="all">كل القطاعات</option><option value="industrial">الصناعة</option><option value="packaging">التعبئة والتغليف</option><option value="electrical">الكهرباء والطاقة</option><option value="construction">المقاولات</option></select></div>
+        </div>
+        <div id="supplierOpportunitiesView" class="market-view"></div>
+        <div id="supplierQuotesView" class="market-view" hidden></div>
+        <div id="supplierDealsView" class="market-view" hidden></div>
+      </div>
+      <div class="market-footnote">DEMO MODE • البيانات تجريبية وليست معاملات حقيقية</div>
+    </div>
+  </div>
+
+  <!-- RFQ COMPOSER -->
+  <div class="market-submodal" id="rfqComposer" aria-hidden="true">
+    <div class="market-submodal-card">
+      <div class="market-head"><div><span class="admin-kicker">RFQ</span><h3>إنشاء طلب شراء جديد</h3><p>أدخل المتطلبات الأساسية ليظهر الطلب للموردين المؤهلين.</p></div><div class="market-head-actions"><button type="button" class="btn btn-ghost btn-sm market-back-btn" onclick="closeRfqComposer()">← رجوع</button><button type="button" class="close-modal" onclick="closeRfqComposer()">×</button></div></div>
+      <form id="rfqForm" onsubmit="submitRfq(event)">
+        <div class="market-form-grid">
+          <div class="f-group"><label>اسم المنتج / الخدمة</label><input id="rfqProduct" required placeholder="مثال: موتور صناعي 50 HP"></div>
+          <div class="f-group"><label>القطاع</label><select id="rfqSector" required><option value="industrial">الصناعة</option><option value="packaging">التعبئة والتغليف</option><option value="electrical">الكهرباء والطاقة</option><option value="construction">المقاولات</option></select></div>
+          <div class="f-group"><label>الكمية</label><input id="rfqQuantity" required placeholder="مثال: 20 وحدة"></div>
+          <div class="f-group"><label>آخر موعد لاستقبال العروض</label><input id="rfqDeadline" type="date" required></div>
+          <div class="f-group market-form-full"><label>المواصفات والمتطلبات</label><textarea id="rfqSpecs" rows="4" required placeholder="المواصفات الفنية، الجودة، بلد المنشأ..."></textarea></div>
+          <div class="f-group"><label>مكان التسليم</label><input id="rfqLocation" required placeholder="القاهرة / السادس من أكتوبر"></div>
+          <div class="f-group"><label>الميزانية المستهدفة (اختياري)</label><input id="rfqBudget" placeholder="مثال: 850,000 ج.م"></div>
+        </div>
+        <div class="market-form-actions"><button type="button" class="btn btn-ghost" onclick="closeRfqComposer()">إلغاء</button><button type="submit" class="btn btn-primary">نشر RFQ للموردين ←</button></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- QUOTE COMPOSER -->
+  <div class="market-submodal" id="quoteComposer" aria-hidden="true">
+    <div class="market-submodal-card">
+      <div class="market-head"><div><span class="admin-kicker">QUOTE</span><h3>تقديم عرض سعر</h3><p id="quoteComposerSub">أدخل تفاصيل العرض للطلب المحدد.</p></div><div class="market-head-actions"><button type="button" class="btn btn-ghost btn-sm market-back-btn" onclick="closeQuoteComposer()">← رجوع</button><button type="button" class="close-modal" onclick="closeQuoteComposer()">×</button></div></div>
+      <form id="quoteForm" onsubmit="submitQuote(event)"><input type="hidden" id="quoteRfqId">
+        <div class="market-form-grid">
+          <div class="f-group"><label>سعر العرض</label><input id="quotePrice" required placeholder="مثال: 820,000 ج.م"></div>
+          <div class="f-group"><label>مدة التوريد</label><input id="quoteLeadTime" required placeholder="مثال: 14 يوم"></div>
+          <div class="f-group"><label>صلاحية العرض</label><input id="quoteValidity" required placeholder="مثال: 30 يوم"></div>
+          <div class="f-group"><label>شروط الدفع</label><select id="quotePayment" required><option>Net 30</option><option>Net 45</option><option>50% مقدم / 50% عند التسليم</option><option>حسب العقد</option></select></div>
+          <div class="f-group market-form-full"><label>ملاحظات العرض</label><textarea id="quoteNotes" rows="4" placeholder="الضمان، الشحن، الاعتمادات، أي استثناءات..."></textarea></div>
+        </div>
+        <div class="market-form-actions"><button type="button" class="btn btn-ghost" onclick="closeQuoteComposer()">إلغاء</button><button type="submit" class="btn btn-primary">إرسال العرض ←</button></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- DEAL OPERATIONS / SHIPMENT TRACKING -->
+  <div class="market-submodal" id="dealOperationsModal" aria-hidden="true">
+    <div class="market-submodal-card wide">
+      <div class="market-head">
+        <div><span class="admin-kicker">DEAL OPERATIONS</span><h3 id="dealOpsTitle">إدارة الصفقة</h3><p id="dealOpsSubtitle">متابعة التنفيذ والشحن والتسليم حتى إغلاق الصفقة.</p></div>
+        <div class="market-head-actions"><button type="button" class="btn btn-ghost btn-sm market-back-btn" onclick="closeDealOperations()">← رجوع</button><button type="button" class="close-modal" onclick="closeDealOperations()">×</button></div>
+      </div>
+      <div id="dealOpsBody" class="deal-ops-body"></div>
+    </div>
+  </div>
+
+  <!-- QUOTE COMPARISON -->
+  <div class="market-submodal" id="quoteCompareModal" aria-hidden="true">
+    <div class="market-submodal-card wide"><div class="market-head"><div><span class="admin-kicker">QUOTE COMPARISON</span><h3 id="quoteCompareTitle">مقارنة العروض</h3><p>قارن السعر ومدة التوريد وشروط الدفع قبل اتخاذ قرار الشراء.</p></div><div class="market-head-actions"><button type="button" class="btn btn-ghost btn-sm market-back-btn" onclick="closeQuoteCompare()">← رجوع</button><button type="button" class="close-modal" onclick="closeQuoteCompare()">×</button></div></div><div id="quoteCompareBody"></div></div>
+  </div>
+
+  <!-- INVESTOR DEMO HUB -->
+  <div class="investor-modal" id="investorDemoModal" aria-hidden="true">
+    <div class="investor-modal-card">
+      <div class="investor-head">
+        <div><span class="admin-kicker">NOVA<span>BID</span> • INVESTOR DEMO</span><h3>Executive Marketplace Overview</h3><p>رحلة مختصرة توضّح المشكلة، التشغيل، الثقة، والاقتصاديات في منصة واحدة.</p></div>
+        <button type="button" class="close-modal" onclick="closeInvestorDemo()">×</button>
+      </div>
+      <div class="investor-kpis" id="investorKpis"></div>
+      <div class="investor-grid">
+        <section class="investor-panel investor-funnel"><div class="panel-title"><h4>Marketplace Funnel</h4><span>Illustrative Demo</span></div><div class="investor-funnel-steps"><div><b>RFQs</b><strong id="invRfqs">0</strong><small>طلبات شراء</small></div><i>→</i><div><b>Quotes</b><strong id="invQuotes">0</strong><small>عروض أسعار</small></div><i>→</i><div><b>Deals</b><strong id="invDeals">0</strong><small>صفقات</small></div><i>→</i><div><b>Completed</b><strong id="invCompleted">0</strong><small>مكتملة</small></div></div></section>
+        <section class="investor-panel"><div class="panel-title"><h4>Trust & Verification</h4><span>Business Control</span></div><div class="trust-flow"><div><span>01</span><b>Business Registered</b><small>حساب شركة</small></div><div><span>02</span><b>Documents Reviewed</b><small>CR + Tax Card</small></div><div><span>03</span><b>Business Verified</b><small>Admin approval</small></div><div><span>04</span><b>Eligible to Trade</b><small>RFQ / Quote / Deal</small></div></div></section>
+        <section class="investor-panel"><div class="panel-title"><h4>Deal Economics</h4><span>2% Demo Take Rate</span></div><div class="economics-box" id="investorEconomics"></div></section>
+        <section class="investor-panel"><div class="panel-title"><h4>Notifications Center</h4><span id="investorNotificationCount">0 updates</span></div><div class="investor-notifications" id="investorNotifications"></div></section>
+      </div>
+      <div class="investor-actions"><button class="btn btn-primary" onclick="launchInvestorBuyer()">فتح Buyer Demo →</button><button class="btn btn-ghost" onclick="launchInvestorSupplier()">فتح Supplier Demo</button><button class="btn btn-ghost" onclick="launchInvestorAdmin()">فتح Admin Command Center</button></div>
+      <div class="investor-note">DEMO MODE • كل الأرقام والعمليات هنا illustrative وليست بيانات تشغيل فعلية.</div>
+    </div>
+  </div>
+
+  <!-- ADMIN BUSINESS VERIFICATION DEMO -->
+  <div class="admin-modal" id="adminModal" aria-hidden="true">
+    <div class="admin-modal-content">
+      <div class="admin-modal-head">
+        <div>
+          <span class="admin-kicker">NOVA<span>BID</span> • ADMIN</span>
+          <h3 data-i18n="admin_title">Business Verification Center</h3>
+          <p data-i18n="admin_sub">مراجعة واعتماد حسابات الشركات والموردين</p>
+        </div>
+        <button type="button" class="close-modal" onclick="closeAdminVerification()" data-i18n-aria-label="admin_close" aria-label="Close">×</button>
+      </div>
+
+      <div class="admin-stats" id="adminStats"></div>
+
+      <div class="admin-queue-head">
+        <div>
+          <h4 data-i18n="admin_queue_title">Business Verification Queue</h4>
+          <span class="admin-demo-badge">DEMO • NO REAL DOCUMENTS</span>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="seedAdminDemo()">↻</button>
+      </div>
+
+      <div class="admin-view-tabs" role="tablist" aria-label="Admin views">
+        <button type="button" class="admin-view-tab active" id="adminQueueTab" onclick="switchAdminView('queue')">طلبات المراجعة <span id="adminQueueCount">0</span></button>
+        <button type="button" class="admin-view-tab" id="adminHistoryTab" onclick="switchAdminView('history')">History الطلبات <span id="adminHistoryCount">0</span></button>
+        <button type="button" class="admin-view-tab" id="adminOpsTab" onclick="switchAdminView('operations')">Operations <span id="adminOpsCount">0</span></button>
+        <button type="button" class="admin-view-tab" id="adminRevenueTab" onclick="switchAdminView('revenue')">Revenue & GMV</button>
+      </div>
+
+      <div class="admin-queue" id="adminQueue"></div>
+      <div class="admin-history" id="adminHistory" hidden></div>
+      <div class="admin-operations" id="adminOperations" hidden></div>
+      <div class="admin-revenue" id="adminRevenue" hidden></div>
+      <div class="admin-toast" id="adminToast" role="status"></div>
+
+      <!-- ADMIN DOCUMENT VIEWER / REVIEW NOTES -->
+      <div class="admin-doc-viewer" id="adminDocViewer" aria-hidden="true">
+        <div class="admin-doc-viewer-card">
+          <div class="admin-doc-viewer-head">
+            <div>
+              <span class="admin-kicker" id="adminDocViewerKicker">DOCUMENT PREVIEW • DEMO</span>
+              <h4 id="adminDocViewerTitle">Commercial Registration</h4>
+              <p id="adminDocViewerMeta">Demo document — no real company data</p>
+            </div>
+            <button type="button" class="close-modal" onclick="closeAdminDocumentViewer()">×</button>
+          </div>
+          <div class="admin-document-page" id="adminDocumentPage">
+            <div class="doc-watermark">NOVABID DEMO</div>
+            <div class="doc-page-top"><strong>REPUBLIC OF EGYPT</strong><span>DEMO COPY</span></div>
+            <div class="doc-seal">✓</div>
+            <h5 id="adminDocumentCompany">Delta Industrial Solutions</h5>
+            <div class="doc-line"><span>Document No.</span><strong id="adminDocumentNumber">CR-458921</strong></div>
+            <div class="doc-line"><span>Company / Business</span><strong id="adminDocumentBusiness">Delta Industrial Solutions</strong></div>
+            <div class="doc-line"><span>Status</span><strong>VALID — DEMO</strong></div>
+            <div class="doc-line"><span>Issued for review</span><strong>NovaBid Business Verification</strong></div>
+            <div class="doc-fake-sign">Authorized Signature</div>
+          </div>
+          <div class="admin-review-note">
+            <label for="adminReviewComment" id="adminReviewCommentLabel">Admin review comment</label>
+            <textarea id="adminReviewComment" rows="4" placeholder="اكتب ملاحظات التعديل بالتحديد…"></textarea>
+            <div class="admin-review-examples">
+              <span>أمثلة:</span>
+              <button type="button" onclick="useAdminComment('يرجى رفع نسخة أوضح من السجل التجاري مع ظهور رقم التسجيل بالكامل.')">السجل التجاري غير واضح</button>
+              <button type="button" onclick="useAdminComment('يرجى رفع بطاقة ضريبية سارية وواضحة، مع التأكد من تطابق اسم الشركة.')">البطاقة الضريبية تحتاج مراجعة</button>
+              <button type="button" onclick="useAdminComment('يرجى تصحيح اسم الشركة ليطابق المستندات الرسمية المرفوعة.')">اسم الشركة غير مطابق</button>
+            </div>
+            <div class="admin-review-actions">
+              <button type="button" class="btn btn-primary" onclick="submitAdminReview('approve')">✓ اعتماد</button>
+              <button type="button" class="btn btn-ghost" onclick="submitAdminReview('changes')">طلب تعديلات</button>
+              <button type="button" class="btn btn-danger" onclick="submitAdminReview('reject')">رفض الطلب</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-modal-footer">
+        <span>NovaBid Business Verification</span>
+        <button type="button" class="btn btn-ghost" onclick="closeAdminVerification()" data-i18n="admin_close">إغلاق</button>
       </div>
     </div>
   </div>
@@ -599,6 +803,7 @@
         <a href="#contact" data-i18n="footer_contact">اتصل بنا</a>
       </div>
       <div class="copyright" data-i18n="footer_copy">© 2026 NovaBid. جميع الحقوق محفوظة (الدقى - الجيزة - مصر).</div>
+      <button type="button" class="footer-admin-btn" onclick="openAdminVerification()" data-i18n="admin_demo">بوابة الإدارة التجريبية</button>
     </div>
   </footer>
 

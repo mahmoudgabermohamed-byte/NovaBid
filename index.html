@@ -45,7 +45,7 @@
           </select>
         </div>
         <button class="btn btn-sm btn-ghost" onclick="openAuthModal('company')" data-i18n="nav_login">تسجيل دخول الشركات</button>
-        <button class="btn btn-sm btn-primary" onclick="openAuthModal('supplier')" data-i18n="nav_signup">انضم كمورد معتمد <span>←</span></button>
+        <button class="btn btn-sm btn-primary" onclick="openAuthModal('supplier'); setAuthMode('register')" data-i18n="nav_signup">إنشاء حساب شركة <span>←</span></button>
       </div>
 
       <button class="menu-btn" aria-label="Open menu">
@@ -77,11 +77,16 @@
           منصة سحابية متقدمة تدعم دورات المشتريات الكاملة (RFQ - Quotations - Orders) مع حسابات وساطة مؤمنة (Escrow) ونظام تحكم مالي احترافي.
         </p>
 
-        <div class="hero-actions reveal delay-3" role="tablist" aria-label="Portal preview">
-          <button class="btn btn-primary btn-lg portal-choice active" id="portalChoiceCompany" onclick="switchPortalTab('company', this)" data-i18n="hero_btn_company">بوابة الشركة (المشتري) <span>←</span></button>
-          <button class="btn btn-ghost btn-lg portal-choice" id="portalChoiceSupplier" onclick="switchPortalTab('supplier', this)" data-i18n="hero_btn_supplier">بوابة المورد (البائع)</button>
+        <div class="hero-actions reveal delay-3">
+          <button class="btn btn-primary btn-lg" onclick="openAuthModal('company')" data-i18n="hero_btn_company">بوابة الشركات (المشترين) <span>←</span></button>
+          <button class="btn btn-ghost btn-lg" onclick="openAuthModal('supplier')" data-i18n="hero_btn_supplier">بوابة الموردين (البائعين)</button>
         </div>
 
+        <!-- Role Selector Preview Tabs (Company vs Supplier) -->
+        <div class="portal-tabs-preview reveal delay-3">
+          <button class="pt-tab active" onclick="switchPortalTab('company')" data-i18n="tab_company">🏢 بوابة الشركات (المشتري)</button>
+          <button class="pt-tab" onclick="switchPortalTab('supplier')" data-i18n="tab_supplier">🏭 بوابة الموردين (البائع)</button>
+        </div>
       </div>
 
       <!-- 3D Interactive Tilt Portal Preview -->
@@ -101,17 +106,17 @@
                   <button class="btn btn-sm btn-primary" onclick="alert('الانتقال لصفحة إنشاء طلب توريد RFQ جديد')"><span data-i18n="c_new_rfq">+ إنشاء طلب توريد جديد (RFQ)</span></button>
                 </div>
                 <div class="metric-row">
-                  <div class="metric-card"><small data-i18n="c_m_1">طلبات الشراء النشطة</small><strong>12</strong><em data-i18n="c_m_1_sub">قيد المراجعة</em></div>
-                  <div class="metric-card"><small data-i18n="c_m_2">العروض المستلمة</small><strong>38</strong><em data-i18n="c_m_2_sub">من مورّدين معتمدين</em></div>
-                  <div class="metric-card"><small data-i18n="c_m_3">الصفقات المؤكدة</small><strong>5</strong><em data-i18n="c_m_3_sub">محفوظة بضمان Escrow</em></div>
+                  <div class="metric-card"><small data-i18n="c_m_1">طلبات الشراء النشطة</small><strong>12</strong><em>قيد المراجعة</em></div>
+                  <div class="metric-card"><small data-i18n="c_m_2">العروض المستلمة</small><strong>38</strong><em>من مورّدين معتمدين</em></div>
+                  <div class="metric-card"><small data-i18n="c_m_3">الصفقات المؤكدة</small><strong>5</strong><em>محفوظة بضمان Escrow</em></div>
                 </div>
                 <div class="deals-table-wrap">
-                  <div class="table-title"><span data-i18n="c_t_title">أحدث طلبات التوريد (RFQs)</span><small data-i18n="table_view_all">عرض الكل ←</small></div>
+                  <div class="table-title"><span data-i18n="c_t_title">أحدث طلبات التوريد (RFQs)</span><small>عرض الكل ←</small></div>
                   <div class="deal-row">
                     <div class="deal-badge status-escrow" data-i18n="badge_escrow">نشط بالضمان</div>
-                    <div><b data-i18n="company_deal_name">توريد مكونات هيدروليكية آليه</b><small data-i18n="company_order_no">رقم الطلب: RFQ-2026-89</small></div>
-                    <div class="deal-price">850,000 <span data-i18n="currency_egp">ج.م</span></div>
-                    <div class="deal-status" data-i18n="company_deal_status">4 عروض مقدمة</div>
+                    <div><b>توريد مكونات هيدروليكية آليه</b><small>رقم الطلب: RFQ-2026-89</small></div>
+                    <div class="deal-price">850,000 ج.م</div>
+                    <div class="deal-status">4 عروض مقدمة</div>
                   </div>
                 </div>
               </div>
@@ -123,39 +128,21 @@
                   <button class="btn btn-sm btn-primary" onclick="alert('استعراض المناقصات المتاحة للتقديم')"><span data-i18n="s_browse">تصفح المناقصات المتاحة</span></button>
                 </div>
                 <div class="metric-row">
-                  <div class="metric-card"><small data-i18n="s_m_1">الفرص المتاحة لقطاعك</small><strong>24</strong><em data-i18n="s_m_1_sub">مناقصة جديدة</em></div>
-                  <div class="metric-card"><small data-i18n="s_m_2">العروض المقدمة</small><strong>9</strong><em data-i18n="s_m_2_sub">قيد التقييم</em></div>
-                  <div class="metric-card"><small data-i18n="s_m_3">العقود الفائزة</small><strong>3</strong><em data-i18n="s_m_3_sub">جارية التنفيذ</em></div>
+                  <div class="metric-card"><small data-i18n="s_m_1">الفرص المتاحة لقطاعك</small><strong>24</strong><em>مناقصة جديدة</em></div>
+                  <div class="metric-card"><small data-i18n="s_m_2">العروض المقدمة</small><strong>9</strong><em>قيد التقييم</em></div>
+                  <div class="metric-card"><small data-i18n="s_m_3">العقود الفائزة</small><strong>3</strong><em>جارية التنفيذ</em></div>
                 </div>
                 <div class="deals-table-wrap">
-                  <div class="table-title"><span data-i18n="s_t_title">الفرصة المتاحة للتقديم (RFQ)</span><small data-i18n="supplier_offer_cta">تقديم عرض سعر ←</small></div>
+                  <div class="table-title"><span data-i18n="s_t_title">الفرصة المتاحة للتقديم (RFQ)</span><small>تقديم عرض سعر ←</small></div>
                   <div class="deal-row">
                     <div class="deal-badge status-matched" data-i18n="badge_opp">فرصة جديدة</div>
-                    <div><b data-i18n="supplier_deal_name">خطوط تعبئة كرتونية متطورة</b><small data-i18n="supplier_buyer_location">مشتري معتمد • السادس من أكتوبر</small></div>
-                    <div class="deal-price">1,400,000 <span data-i18n="currency_egp">ج.م</span></div>
-                    <div class="deal-status" data-i18n="supplier_deal_status">متبقي 3 أيام للإغلاق</div>
+                    <div><b>خطوط تعبئة كرتونية متطورة</b><small>مشتري معتمد • السادس من أكتوبر</small></div>
+                    <div class="deal-price">1,400,000 ج.م</div>
+                    <div class="deal-status">متبقي 3 أيام للإغلاق</div>
                   </div>
                 </div>
               </div>
 
-            </div>
-
-            <!-- Anonymized live activity: product demo data only, no company identities or deal details -->
-            <div class="live-pulse" id="livePulse" aria-live="polite">
-              <div class="live-pulse-head">
-                <span class="live-dot"></span>
-                <strong data-i18n="live_pulse_title">نبض الصفقات المباشر</strong>
-                <span class="live-demo" data-i18n="live_pulse_demo">بيانات تجريبية مجهّلة</span>
-              </div>
-              <div class="live-pulse-track">
-                <div class="live-pulse-icon" id="livePulseIcon">↗</div>
-                <div class="live-pulse-copy">
-                  <strong id="livePulseMain">مطابقة RFQ مع 8 موردين معتمدين</strong>
-                  <span id="livePulseSub">قطاع صناعي • بيانات مجهّلة</span>
-                </div>
-                <span class="live-pulse-time" id="livePulseTime">الآن</span>
-              </div>
-              <div class="live-pulse-bar"><span id="livePulseBar"></span></div>
             </div>
           </div>
         </div>
@@ -355,12 +342,12 @@
           <div class="contact-form-card">
             <h3 data-i18n="form_title">أرسل استفسارك المباشر</h3>
             <p data-i18n="form_sub">سيقوم أحد مسؤولي صفقات NovaBid بالتواصل معك خلال ساعتين عمل.</p>
-            <form id="inquiryForm" onsubmit="handleInquirySubmit(event)">
+            <form id="inquiryForm" onsubmit="event.preventDefault(); alert('تم إرسال طلبك بنجاح! سيتواصل معك فريق المنصة قريباً.');">
               <div class="f-group">
-                <input type="text" placeholder="اسم الشركة أو المسؤول" data-i18n-placeholder="inquiry_name" required>
+                <input type="text" placeholder="اسم الشركة أو المسؤول" required>
               </div>
               <div class="f-group">
-                <input type="tel" placeholder="رقم الموبايل / واتساب" data-i18n-placeholder="inquiry_phone" required>
+                <input type="tel" placeholder="رقم الموبايل / واتساب" required>
               </div>
               <div class="f-group">
                 <select>
@@ -370,7 +357,7 @@
                 </select>
               </div>
               <div class="f-group">
-                <textarea rows="4" placeholder="تفاصيل الاستفسار أو الصفقة..." data-i18n-placeholder="inquiry_details" required></textarea>
+                <textarea rows="4" placeholder="تفاصيل الاستفسار أو الصفقة..." required></textarea>
               </div>
               <button type="submit" class="btn btn-primary btn-lg" style="width:100%;" data-i18n="form_btn">إرسال الطلب الآن <span>←</span></button>
             </form>
@@ -393,36 +380,92 @@
     </section>
   </main>
 
-  <!-- AUTH / PORTAL SIMULATOR MODAL -->
-  <div class="auth-modal" id="authModal">
-    <div class="auth-modal-content">
-      <button class="close-modal" onclick="closeAuthModal()">×</button>
+  <!-- AUTH / REGISTRATION MODAL -->
+  <div class="auth-modal" id="authModal" aria-hidden="true">
+    <div class="auth-modal-content registration-modal">
+      <button class="close-modal" onclick="closeAuthModal()" aria-label="إغلاق">×</button>
       <div class="auth-header">
-        <div class="brand-logo-wrap" style="margin: 0 auto 15px;">
+        <div class="brand-logo-wrap" style="margin:0 auto 15px;">
           <img src="logo.png" alt="Nova Vision Advisory" onerror="this.onerror=null; this.src='assets/logo.png';">
         </div>
-        <h3 id="authModalTitle" data-i18n="modal_title">تسجيل الدخول للبوابات</h3>
-        <p id="authModalSub" data-i18n="modal_sub">اختر صفات حسابك في منصة NovaBid</p>
-      </div>
-      
-      <div class="auth-tabs" style="grid-template-columns: repeat(2, 1fr);">
-        <button class="auth-tab active" id="modalTabCompany" onclick="setModalRole('company')" data-i18n="modal_company">🏢 الشركة (المشتري)</button>
-        <button class="auth-tab" id="modalTabSupplier" onclick="setModalRole('supplier')" data-i18n="modal_supplier">🏭 المورد (البائع)</button>
+        <div class="auth-kicker" id="authModeKicker">SECURE BUSINESS ACCESS</div>
+        <h3 id="authModalTitle">الدخول إلى NovaBid</h3>
+        <p id="authModalSub">سجّل الدخول أو أنشئ حساب شركة جديد.</p>
       </div>
 
-      <div class="auth-form-body">
-        <div id="roleDescBox" style="background:#f1f5f9; padding:12px; border-radius:10px; font-size:13px; color:#475569; margin-bottom:20px; text-align:center;"></div>
+      <div class="auth-tabs auth-mode-tabs">
+        <button class="auth-tab active" id="modeLogin" onclick="setAuthMode('login')">تسجيل الدخول</button>
+        <button class="auth-tab" id="modeRegister" onclick="setAuthMode('register')">إنشاء حساب</button>
+      </div>
+
+      <div id="loginPanel">
+        <div class="role-picker compact">
+          <button class="role-card active" id="loginRoleCompany" onclick="setModalRole('company')">🏢 <span>مشتري / شركة</span></button>
+          <button class="role-card" id="loginRoleSupplier" onclick="setModalRole('supplier')">🏭 <span>بائع / مورد</span></button>
+        </div>
+        <div id="roleDescBox" class="role-desc">إدارة طلبات الشراء RFQ ومتابعة عروض الأسعار والصفقات.</div>
         <form onsubmit="handlePortalLogin(event)">
-          <div class="f-group">
-            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:#334155;" data-i18n="login_email_label">البريد الإلكتروني للعمل</label>
-            <input type="email" id="loginEmail" placeholder="name@company.com" data-i18n-placeholder="login_email_placeholder" required>
-          </div>
-          <div class="f-group">
-            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:#334155;" data-i18n="login_password_label">كلمة المرور</label>
-            <input type="password" id="loginPass" placeholder="••••••••" data-i18n-placeholder="login_password_placeholder" required>
-          </div>
-          <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top:10px;" id="loginBtnText">الدخول إلى بوابة الشركة <span>→</span></button>
+          <div class="f-group"><label>البريد الإلكتروني للعمل</label><input type="email" id="loginEmail" placeholder="name@company.com" required></div>
+          <div class="f-group"><label>كلمة المرور</label><input type="password" id="loginPass" placeholder="••••••••" required></div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;" id="loginBtnText">الدخول إلى بوابة الشركات ←</button>
         </form>
+      </div>
+
+      <div id="registerPanel" style="display:none;">
+        <div class="wizard-progress"><div class="wizard-progress-fill" id="wizardProgressFill"></div></div>
+        <div class="wizard-steps"><span class="active" id="stepDot1">1</span><span id="stepDot2">2</span><span id="stepDot3">3</span><span id="stepDot4">4</span></div>
+
+        <form id="registrationForm" onsubmit="handleRegistrationSubmit(event)">
+          <section class="register-step active" data-step="1">
+            <div class="step-title"><span>01</span><div><h4>نوع الحساب</h4><p>اختار دور شركتك على NovaBid.</p></div></div>
+            <div class="role-picker">
+              <button type="button" class="role-card active" id="registerRoleCompany" onclick="setRegistrationRole('company')"><b>🏢</b><strong>شركة / مشتري</strong><small>إنشاء RFQs واستقبال عروض الموردين.</small></button>
+              <button type="button" class="role-card" id="registerRoleSupplier" onclick="setRegistrationRole('supplier')"><b>🏭</b><strong>مورد / بائع</strong><small>استقبال الفرص وتقديم عروض الأسعار.</small></button>
+            </div>
+            <div class="step-actions"><button type="button" class="btn btn-primary btn-lg" onclick="registrationNext(2)">التالي ←</button></div>
+          </section>
+
+          <section class="register-step" data-step="2">
+            <div class="step-title"><span>02</span><div><h4>بيانات الحساب والشركة</h4><p>هذه البيانات ستُستخدم في ملف النشاط التجاري.</p></div></div>
+            <div class="form-grid-2">
+              <div class="f-group"><label>اسم المسؤول</label><input id="regFullName" type="text" required placeholder="الاسم بالكامل"></div>
+              <div class="f-group"><label>البريد الإلكتروني</label><input id="regEmail" type="email" required placeholder="name@company.com"></div>
+              <div class="f-group"><label>رقم الهاتف</label><input id="regPhone" type="tel" required placeholder="01xxxxxxxxx"></div>
+              <div class="f-group"><label>كلمة المرور</label><input id="regPassword" type="password" minlength="8" required placeholder="8 أحرف على الأقل"></div>
+            </div>
+            <div class="f-group"><label>اسم الشركة الرسمي</label><input id="regCompanyName" type="text" required placeholder="اسم الشركة كما هو في المستندات الرسمية"></div>
+            <div class="form-grid-2">
+              <div class="f-group"><label>الرقم التجاري</label><input id="regCrNumber" type="text" required placeholder="Commercial Registration No."></div>
+              <div class="f-group"><label>الرقم الضريبي</label><input id="regTaxNumber" type="text" required placeholder="Tax ID"></div>
+            </div>
+            <div class="step-actions"><button type="button" class="btn btn-ghost btn-lg" onclick="registrationNext(1)">→ السابق</button><button type="button" class="btn btn-primary btn-lg" onclick="registrationNext(3)">التالي ←</button></div>
+          </section>
+
+          <section class="register-step" data-step="3">
+            <div class="step-title"><span>03</span><div><h4>مستندات التحقق التجاري</h4><p>للعرض التجريبي فقط — لا ترفع مستندات حقيقية الآن.</p></div></div>
+            <div class="security-note"><b>🔒 Private by design</b><span>في النسخة الإنتاجية سيتم تخزين المستندات في Private Storage وليس GitHub.</span></div>
+            <div class="document-upload-grid">
+              <label class="document-drop"><input id="regCommercialDoc" type="file" accept=".pdf,.jpg,.jpeg,.png" required onchange="updateFileLabel(this,'commercialFileName')"><span class="doc-icon">▣</span><strong>السجل التجاري</strong><small id="commercialFileName">PDF / JPG / PNG</small></label>
+              <label class="document-drop"><input id="regTaxDoc" type="file" accept=".pdf,.jpg,.jpeg,.png" required onchange="updateFileLabel(this,'taxFileName')"><span class="doc-icon">▤</span><strong>البطاقة الضريبية</strong><small id="taxFileName">PDF / JPG / PNG</small></label>
+            </div>
+            <div class="step-actions"><button type="button" class="btn btn-ghost btn-lg" onclick="registrationNext(2)">→ السابق</button><button type="button" class="btn btn-primary btn-lg" onclick="registrationNext(4)">مراجعة البيانات ←</button></div>
+          </section>
+
+          <section class="register-step" data-step="4">
+            <div class="step-title"><span>04</span><div><h4>مراجعة وإرسال</h4><p>بعد الإرسال يصبح الحساب قيد مراجعة فريق NovaBid.</p></div></div>
+            <div class="review-card" id="registrationReview"></div>
+            <label class="consent-line"><input id="regConsent" type="checkbox" required><span>أقر بأن بيانات الشركة والمستندات المرفوعة صحيحة ومصرح لي بتقديمها.</span></label>
+            <div class="step-actions"><button type="button" class="btn btn-ghost btn-lg" onclick="registrationNext(3)">→ تعديل</button><button type="submit" class="btn btn-primary btn-lg">إنشاء الحساب وإرساله للمراجعة ✓</button></div>
+          </section>
+        </form>
+      </div>
+
+      <div id="registrationSuccess" class="registration-success" style="display:none;">
+        <div class="success-orb">✓</div><div class="status-badge">UNDER REVIEW</div>
+        <h4>تم إنشاء الحساب بنجاح</h4>
+        <p>تم تأكيد بيانات التسجيل تجريبيًا. الحساب الآن <b>قيد مراجعة Business Verification</b>.</p>
+        <div class="success-meta"><span>Role</span><strong id="successRole">Company / Buyer</strong><span>Status</span><strong>UNDER_REVIEW</strong></div>
+        <button class="btn btn-primary btn-lg" style="width:100%;" onclick="closeAuthModal()">العودة إلى NovaBid</button>
       </div>
     </div>
   </div>

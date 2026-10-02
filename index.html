@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlRoot">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8fafc">
+  <meta name="description" content="NovaBid — Enterprise B2B Procurement SaaS & Escrow Brokerage Platform.">
+  <title data-i18n="page_title">NovaBid — منصة الوساطة التجارية وصفقات B2B العالمية والمضمونة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="cursor-glow"></div>
+  <div class="ambient-glow"></div>
+
+  <header class="nav-wrap">
+    <nav class="nav container">
+      <a class="brand" href="#">
+        <div class="brand-logo-wrap">
+          <img src="logo.png" alt="Nova Vision Advisory" onerror="this.onerror=null; this.src='assets/logo.png';">
+        </div>
+        <div class="brand-text">
+          <span>NovaBid</span>
+          <small data-i18n="brand_sub">Global B2B Brokerage</small>
+        </div>
+      </a>
+      
+      <div class="nav-links">
+        <a href="#about" data-i18n="nav_about">من نحن</a>
+        <a href="#portals" data-i18n="nav_portals">بوابات المنصة</a>
+        <a href="#escrow" data-i18n="nav_escrow">ضمان Escrow</a>
+        <a href="#calculator" data-i18n="nav_calculator">حاسبة التوفير</a>
+        <a href="#contact" data-i18n="nav_contact">اتصل بنا</a>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Multi-Language Selector -->
+        <div class="lang-selector">
+          <select id="langSelect" aria-label="Language Selector">
+            <option value="ar" selected>🇸🇦 العربية</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="zh">🇨🇳 中文</option>
+          </select>
+        </div>
+        <button class="btn btn-sm btn-ghost" onclick="openAuthModal('company')" data-i18n="nav_login">تسجيل دخول الشركات</button>
+        <button class="btn btn-sm btn-primary" onclick="openAuthModal('supplier')" data-i18n="nav_signup">انضم كمورد معتمد <span>←</span></button>
+      </div>
+
+      <button class="menu-btn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero" id="features">
+      <div class="hero-bg-shapes"></div>
+      <div class="floating-orb orb-1"></div>
+      <div class="floating-orb orb-2"></div>
+      <div class="floating-orb orb-3"></div>
+
+      <div class="container hero-content">
+        <div class="eyebrow reveal">
+          <span class="pulse-dot"></span>
+          <span data-i18n="hero_eyebrow">منصة الوساطة التجارية العالمية B2B • إحدى شركات Nova Vision Advisory</span>
+        </div>
+
+        <h1 class="reveal delay-1">
+          <span data-i18n="hero_title_1">نظام رقمي متكامل لإدارة الصفقات</span><br>
+          <span class="gradient-text" data-i18n="hero_title_2">بين الشركات والموردين بأعلى أمان.</span>
+        </h1>
+
+        <p class="hero-copy reveal delay-2" data-i18n="hero_desc">
+          منصة سحابية متقدمة تدعم دورات المشتريات الكاملة (RFQ - Quotations - Orders) مع حسابات وساطة مؤمنة (Escrow) ونظام تحكم مالي احترافي.
+        </p>
+
+        <div class="hero-actions reveal delay-3">
+          <button class="btn btn-primary btn-lg" onclick="openAuthModal('company')" data-i18n="hero_btn_company">بوابة الشركات (المشترين) <span>←</span></button>
+          <button class="btn btn-ghost btn-lg" onclick="openAuthModal('supplier')" data-i18n="hero_btn_supplier">بوابة الموردين (البائعين)</button>
+        </div>
+
+        <!-- Role Selector Preview Tabs (Company vs Supplier) -->
+        <div class="portal-tabs-preview reveal delay-3">
+          <button class="pt-tab active" onclick="switchPortalTab('company')" data-i18n="tab_company">🏢 بوابة الشركات (المشتري)</button>
+          <button class="pt-tab" onclick="switchPortalTab('supplier')" data-i18n="tab_supplier">🏭 بوابة الموردين (البائع)</button>
+        </div>
+      </div>
+
+      <!-- 3D Interactive Tilt Portal Preview -->
+      <div class="hero-panel-wrap">
+        <div class="container">
+          <div class="dashboard-preview reveal delay-4" id="tiltDashboard">
+            <div class="preview-top">
+              <div class="window-dots"><i></i><i></i><i></i></div>
+              <span id="portalWindowTitle" data-i18n="p_win_company">NovaBid Company Portal / لوحة تحكم المشتري</span>
+              <span class="secure" data-i18n="dash_secure">● ضمان Escrow المصرفي مؤمن</span>
+            </div>
+            <div class="preview-body" id="portalPreviewBody">
+              <!-- Default Company View -->
+              <div class="preview-main full-width" id="viewCompany">
+                <div class="preview-head">
+                  <div><small data-i18n="c_dv_sub">إدارة طلبات الشراء (RFQs) وعروض الأسعار</small><h3 data-i18n="c_dv_title">مرحباً بك، شركة الصناعات الهندسية</h3></div>
+                  <button class="btn btn-sm btn-primary" onclick="alert('الانتقال لصفحة إنشاء طلب توريد RFQ جديد')"><span data-i18n="c_new_rfq">+ إنشاء طلب توريد جديد (RFQ)</span></button>
+                </div>
+                <div class="metric-row">
+                  <div class="metric-card"><small data-i18n="c_m_1">طلبات الشراء النشطة</small><strong>12</strong><em>قيد المراجعة</em></div>
+                  <div class="metric-card"><small data-i18n="c_m_2">العروض المستلمة</small><strong>38</strong><em>من مورّدين معتمدين</em></div>
+                  <div class="metric-card"><small data-i18n="c_m_3">الصفقات المؤكدة</small><strong>5</strong><em>محفوظة بضمان Escrow</em></div>
+                </div>
+                <div class="deals-table-wrap">
+                  <div class="table-title"><span data-i18n="c_t_title">أحدث طلبات التوريد (RFQs)</span><small>عرض الكل ←</small></div>
+                  <div class="deal-row">
+                    <div class="deal-badge status-escrow" data-i18n="badge_escrow">نشط بالضمان</div>
+                    <div><b>توريد مكونات هيدروليكية آليه</b><small>رقم الطلب: RFQ-2026-89</small></div>
+                    <div class="deal-price">850,000 ج.م</div>
+                    <div class="deal-status">4 عروض مقدمة</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Supplier View -->
+              <div class="preview-main full-width" id="viewSupplier" style="display:none;">
+                <div class="preview-head">
+                  <div><small data-i18n="s_dv_sub">استعراض الفرص وتقديم عروض الأسعار</small><h3 data-i18n="s_dv_title">مرحباً بك، المصنع الوطني للتغليف</h3></div>
+                  <button class="btn btn-sm btn-primary" onclick="alert('استعراض المناقصات المتاحة للتقديم')"><span data-i18n="s_browse">تصفح المناقصات المتاحة</span></button>
+                </div>
+                <div class="metric-row">
+                  <div class="metric-card"><small data-i18n="s_m_1">الفرص المتاحة لقطاعك</small><strong>24</strong><em>مناقصة جديدة</em></div>
+                  <div class="metric-card"><small data-i18n="s_m_2">العروض المقدمة</small><strong>9</strong><em>قيد التقييم</em></div>
+                  <div class="metric-card"><small data-i18n="s_m_3">العقود الفائزة</small><strong>3</strong><em>جارية التنفيذ</em></div>
+                </div>
+                <div class="deals-table-wrap">
+                  <div class="table-title"><span data-i18n="s_t_title">الفرصة المتاحة للتقديم (RFQ)</span><small>تقديم عرض سعر ←</small></div>
+                  <div class="deal-row">
+                    <div class="deal-badge status-matched" data-i18n="badge_opp">فرصة جديدة</div>
+                    <div><b>خطوط تعبئة كرتونية متطورة</b><small>مشتري معتمد • السادس من أكتوبر</small></div>
+                    <div class="deal-price">1,400,000 ج.م</div>
+                    <div class="deal-status">متبقي 3 أيام للإغلاق</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE MODEL SECTION -->
+    <section id="portals" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-kicker" data-i18n="arch_kicker">بوابات العمل التجاري (Trading Portals)</span>
+            <h2 data-i18n="arch_heading">بوابتان رئيسيتان تلبي احتياجات المشتري والبائع.</h2>
+          </div>
+          <p data-i18n="arch_desc">صممنا بيئة التشغيل لتبسط التواصل والتعاقد بين الشركات طالبة التوريد والموردين المعتمدين.</p>
+        </div>
+
+        <div class="escrow-grid" style="grid-template-columns: repeat(2, 1fr);">
+          <div class="escrow-card reveal">
+            <div class="escrow-num">01</div>
+            <div class="escrow-icon">🏢</div>
+            <h3 data-i18n="arch_c_title">بوابة الشركات (Company Portal)</h3>
+            <p data-i18n="arch_c_desc">تتيح للعميل (المشتري) إنشاء طلبات الشراء (RFQs)، متابعة عروض الأسعار، مقارنة الأسعار بذكاء، وإدارة الأوامر والعقود.</p>
+          </div>
+          <div class="escrow-card reveal delay-1">
+            <div class="escrow-num">02</div>
+            <div class="escrow-icon">🏭</div>
+            <h3 data-i18n="arch_s_title">بوابة الموردين (Supplier Portal)</h3>
+            <p data-i18n="arch_s_desc">تتيح للبائع تصفح المناقصات المتاحة في قطاعه، تقديم عروض أسعار تنافسية، متابعة حالة التوريدات، واستلام المستحقات المالية.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT US SECTION -->
+    <section id="about" class="section section-light-alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-kicker" data-i18n="about_kicker">من نحن • NovaBid</span>
+            <h2 data-i18n="about_heading">المنصة الأذكى لوساطة التوريد وإدارة صفقات B2B.</h2>
+          </div>
+          <p data-i18n="about_desc">
+            تُعد NovaBid إحدى الشركات الرائدة التابعة لـ Nova Vision Advisory، حيث صُممت لتحدث ثورة حقيقية في عالم التوريد التجاري. نخلص الشركات من عناء البحث ومخاطر التعاملات التقليدية عبر بيئة وساطة ذكية تضمن الحقوق، توفر السيولة، وتقدم أسعاراً تنافسية بحلول رقمية متطورة.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-card reveal">
+            <div class="about-icon">🎯</div>
+            <h3 data-i18n="ab_card_1_title">مطابقة ذكية بالذكاء الاصطناعي</h3>
+            <p data-i18n="ab_card_1_desc">نربط طلبات الشراء (RFQ) بأفضل الموردين المعتمدين بدقة وسرعة فائقة تلبي احتياجات مشروعك فوراً.</p>
+          </div>
+          <div class="about-card reveal delay-1">
+            <div class="about-icon">🛡️</div>
+            <h3 data-i18n="ab_card_2_title">ضمان بنكي ومالي (Escrow)</h3>
+            <p data-i18n="ab_card_2_desc">نحفظ أموال الصفقات في حسابات وساطة مؤمنة لا يُفرج عنها إلا بعد الاستلام والمطابقة التامة للمواصفات.</p>
+          </div>
+          <div class="about-card reveal delay-2">
+            <div class="about-icon">📉</div>
+            <h3 data-i18n="ab_card_3_title">توفير هيكلي في التكاليف</h3>
+            <p data-i18n="ab_card_3_desc">نساعد الشركات على خفض تكاليف المشتريات بنسب تصل إلى 18% من خلال المنافسة الحرة بين الموردين.</p>
+          </div>
+          <div class="about-card reveal delay-3">
+            <div class="about-icon">🌐</div>
+            <h3 data-i18n="ab_card_4_title">شبكة توريد محلية ودولية</h3>
+            <p data-i18n="ab_card_4_desc">وصول كامل لآلاف المصانع والموردين المعتمدمين في مصر، الشرق الأوسط، وكبرى الأسواق العالمية.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST ESCROW SHIELD SECTION -->
+    <section id="escrow" class="section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-kicker" data-i18n="escrow_kicker">درع الوساطة والضمان (The Escrow Shield)</span>
+            <h2 data-i18n="escrow_heading">كيف تحمي <span>NovaBid</span> أموالك وضماناتك؟</h2>
+          </div>
+          <p data-i18n="escrow_desc">نظام وساطة مالي متكامل يضمن تنفيذ عقود التوريد بأعلى معايير الثقة والأمان المصرفي.</p>
+        </div>
+
+        <div class="escrow-grid">
+          <div class="escrow-card reveal">
+            <div class="escrow-num">01</div>
+            <div class="escrow-icon">🔒</div>
+            <h3 data-i18n="escrow_1_title">الإيداع المالي المؤمّن (Escrow)</h3>
+            <p data-i18n="escrow_1_desc">يحول المشتري قيمة الصفقة إلى حساب الوساطة المعتمد؛ ولا يُفرج عن الأموال للمورد إلا بعد الاستلام والمطابقة الكاملة للمواصفات.</p>
+          </div>
+          <div class="escrow-card reveal delay-1">
+            <div class="escrow-num">02</div>
+            <div class="escrow-icon">📑</div>
+            <h3 data-i18n="escrow_2_title">التدقيق الفني والمستندي</h3>
+            <p data-i18n="escrow_2_desc">نراجع العقود، الفواتير، والمواصفات القياسية للتأكد من التزام الطرفين ببنود التوريد المتفق عليها بدقة تامة.</p>
+          </div>
+          <div class="escrow-card reveal delay-2">
+            <div class="escrow-num">03</div>
+            <div class="escrow-icon">⚡</div>
+            <h3 data-i18n="escrow_3_title">التسوية والإفراج الفوري</h3>
+            <p data-i18n="escrow_3_desc">بمجرد اعتماد محضر الاستلام النهائي، تُحوّل المستحقات المالية للمورد فوراً وبأعلى درجات الشفافية والسرعة.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE SAVINGS CALCULATOR -->
+    <section id="calculator" class="section section-light-alt">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-kicker" data-i18n="calc_kicker">حاسبة العائد والتوفير الفوري</span>
+            <h2 data-i18n="calc_heading">احسب العائد المالي المتوقع لشركتك.</h2>
+          </div>
+          <p data-i18n="calc_desc">حدد حجم مشترياتك الشهرية وشاهد بالأرقام قيمة التوفير السنوي وعدد الموردين المعتمين لخدمتك.</p>
+        </div>
+
+        <div class="calc-card reveal">
+          <div class="calc-inputs">
+            <div class="input-group">
+              <label data-i18n="calc_label_sector">اختر القطاع التجاري / الصناعي</label>
+              <select id="sectorSelect">
+                <option value="industrial" data-i18n="opt_industrial">الصناعة ومستلزمات الإنتاج الآلي</option>
+                <option value="packaging" data-i18n="opt_packaging">التعبئة والتغليف والمواد الغذائية</option>
+                <option value="electrical" data-i18n="opt_electrical">المعدات الكهربائية والطاقة المتجددة</option>
+                <option value="construction" data-i18n="opt_construction">مواد البناء وهياكل المقاولات</option>
+                <option value="corporate" data-i18n="opt_corporate">الخدمات المؤسسية وتكنولوجيا المعلومات</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label data-i18n="calc_label_budget">حجم مشترياتك الشهرية المتوقعة (جنيه مصري)</label>
+              <input type="range" id="budgetRange" min="50000" max="5000000" step="50000" value="800000">
+              <div class="range-val"><b id="budgetValue">800,000</b> <span data-i18n="currency_unit">ج.م شهرياً</span></div>
+            </div>
+          </div>
+          <div class="calc-results">
+            <div class="res-box">
+              <small data-i18n="res_box_1">إجمالي التوفير السنوي المتوقع</small>
+              <strong id="savingResult">1,536,000 ج.م</strong>
+              <span data-i18n="res_box_1_sub">بنسبة توفير فعلية تصل إلى 16%</span>
+            </div>
+            <div class="res-box">
+              <small data-i18n="res_box_2">الموردون المعتمدون لطلبك</small>
+              <strong id="supplierResult">56 مورّداً معتمداً</strong>
+              <span data-i18n="res_box_2_sub">جاهزون لتقديم عروض أسعار تنافسية</span>
+            </div>
+            <button class="btn btn-primary btn-lg" style="width:100%; margin-top:20px;" onclick="openAuthModal('company')" data-i18n="calc_cta">تسجيل الشركة لبدء طلبات التوريد <span>←</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT & CORPORATE DETAILS SECTION -->
+    <section id="contact" class="section contact-section">
+      <div class="container">
+        <div class="section-head reveal">
+          <div>
+            <span class="section-kicker" data-i18n="contact_kicker">تواصل مع شركتنا</span>
+            <h2 data-i18n="contact_heading">نحن هنا لدعم نمو وتأمين صفقات شركتك.</h2>
+          </div>
+          <p data-i18n="contact_desc">تواصل معنا عبر قنوات الاتصال الرسمية لمنصة NovaBid أو زر مقرنا الرئيسي في الجيزة.</p>
+        </div>
+
+        <div class="contact-grid reveal">
+          <div class="contact-info-card">
+            <div class="contact-item">
+              <div class="c-icon">📍</div>
+              <div>
+                <strong data-i18n="c_addr_title">المقر الرئيسي:</strong>
+                <span data-i18n="c_addr_val">الدقى - الجيزة - مصر</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="c-icon">📞</div>
+              <div>
+                <strong data-i18n="c_phone_title">أرقام الموبايل والواتساب:</strong>
+                <span><a href="https://wa.me/201154926008" target="_blank">01154926008</a></span><br>
+                <span><a href="https://wa.me/201012184214" target="_blank">01012184214</a></span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="c-icon">✉️</div>
+              <div>
+                <strong data-i18n="c_email_title">البريد الإلكتروني:</strong>
+                <span><a href="mailto:info@novavisionadvisory.com">info@novavisionadvisory.com</a></span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="c-icon">🌐</div>
+              <div>
+                <strong data-i18n="c_web_title">الموقع الإلكتروني:</strong>
+                <span><a href="https://www.novavisionadvisory.com" target="_blank">www.novavisionadvisory.com</a></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-card">
+            <h3 data-i18n="form_title">أرسل استفسارك المباشر</h3>
+            <p data-i18n="form_sub">سيقوم أحد مسؤولي صفقات NovaBid بالتواصل معك خلال ساعتين عمل.</p>
+            <form id="inquiryForm" onsubmit="event.preventDefault(); alert('تم إرسال طلبك بنجاح! سيتواصل معك فريق المنصة قريباً.');">
+              <div class="f-group">
+                <input type="text" placeholder="اسم الشركة أو المسؤول" required>
+              </div>
+              <div class="f-group">
+                <input type="tel" placeholder="رقم الموبايل / واتساب" required>
+              </div>
+              <div class="f-group">
+                <select>
+                  <option data-i18n="f_opt_2">طلب توريد (RFQ) عبر NovaBid</option>
+                  <option data-i18n="f_opt_3">انضمام كمورّد معتمد</option>
+                  <option data-i18n="f_opt_1">استفسار عام عن خدمات الوساطة</option>
+                </select>
+              </div>
+              <div class="f-group">
+                <textarea rows="4" placeholder="تفاصيل الاستفسار أو الصفقة..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg" style="width:100%;" data-i18n="form_btn">إرسال الطلب الآن <span>←</span></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+      <div class="container cta-inner reveal">
+        <span class="section-kicker" data-i18n="cta_kicker">انضم إلى مجتمع النخبة التجارية</span>
+        <h2 data-i18n="cta_heading">ارتقِ بعمليات التوريد في شركتك<br><span>إلى أعلى معايير الأمان والربحية.</span></h2>
+        <p data-i18n="cta_desc">ابدأ اليوم مستفيداً من قوة الوساطة المالية المضمونة والشبكة الواسعة لموردي NovaBid.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" onclick="openAuthModal('company')" data-i18n="cta_btn_1">تسجيل شركة جديدة <span>←</span></button>
+          <button class="btn btn-ghost-dark btn-lg" onclick="openAuthModal('supplier')" data-i18n="cta_btn_2">تسجيل كمورّد معتمد</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- AUTH / PORTAL SIMULATOR MODAL -->
+  <div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+    <div class="auth-modal-content">
+      <button class="close-modal" type="button" aria-label="Close" onclick="closeAuthModal()">×</button>
+      <div class="auth-header">
+        <div class="auth-logo-wrap">
+          <img src="logo.png" alt="Nova Vision Advisory" onerror="this.onerror=null; this.src='assets/logo.png';">
+        </div>
+        <h3 id="authModalTitle">تسجيل الدخول للبوابات</h3>
+        <p id="authModalSub">اختر صفات حسابك في منصة NovaBid</p>
+      </div>
+      
+      <div class="auth-tabs" style="grid-template-columns: repeat(2, 1fr);">
+        <button class="auth-tab active" id="modalTabCompany" onclick="setModalRole('company')">🏢 شركة (مشتري)</button>
+        <button class="auth-tab" id="modalTabSupplier" onclick="setModalRole('supplier')">🏭 مورّد (بائع)</button>
+      </div>
+
+      <div class="auth-form-body">
+        <div id="roleDescBox" style="background:#f1f5f9; padding:12px; border-radius:10px; font-size:13px; color:#475569; margin-bottom:20px; text-align:center;">
+          أنت على وشك الدخول إلى <b>بوابة الشركات</b> لإدارة طلبات الشراء (RFQs) وعروض الأسعار.
+        </div>
+        <form onsubmit="handlePortalLogin(event)">
+          <div class="f-group">
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:#334155;">البريد الإلكتروني للعمل</label>
+            <input type="email" id="loginEmail" placeholder="name@company.com" required>
+          </div>
+          <div class="f-group">
+            <label style="display:block; font-size:12px; font-weight:700; margin-bottom:6px; color:#334155;">كلمة المرور</label>
+            <input type="password" id="loginPass" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%; margin-top:10px;" id="loginBtnText">الدخول إلى بوابة الشركات <span>→</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="brand">
+          <img src="logo.png" alt="" style="width:36px; height:36px;" onerror="this.onerror=null; this.src='assets/logo.png';">
+          <span style="color:#fff;">NovaBid</span>
+        </div>
+        <p data-i18n="footer_desc">منصة الوساطة التجارية B2B المضمونة. إحدى شركات Nova Vision Advisory.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#about" data-i18n="footer_about">من نحن</a>
+        <a href="#portals" data-i18n="footer_portals">بوابات المنصة</a>
+        <a href="#escrow" data-i18n="footer_escrow">ضمان Escrow</a>
+        <a href="#calculator" data-i18n="footer_calc">حاسبة التوفير</a>
+        <a href="#contact" data-i18n="footer_contact">اتصل بنا</a>
+      </div>
+      <div class="copyright" data-i18n="footer_copy">© 2026 NovaBid. جميع الحقوق محفوظة (الدقى - الجيزة - مصر).</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
